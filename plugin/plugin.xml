@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.MAAS360Utilities" name="MaaS360 Utilities" version="12"/>
+    <identifier id="com.ibm.mobilefirst.MAAS360Utilities" name="MaaS360 Utilities" version="14"/>
     <description>
       Utilities related to integrating with MaaS360 via Web Services, such as Authenticating.
 	  </description>
@@ -12,49 +12,31 @@
     <description>Sends an HTTP call to a URL for Authentication Token</description>
     <properties>
       <property name="url" required="true">
-        <property-ui type="textBox"
-                     label="URL"
-                     description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink"/>
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
       </property>
       <property name="billing_id" required="true">
-        <property-ui type="textBox"
-                     label="Billing ID"
-                     description="Billing Identifier - Available after customer enrolls with MaaS360."/>
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
       </property>
       <property name="platform_id" required="true">
-        <property-ui type="textBox"
-                     label="Platform ID"
-                     description="This should be the application platform id provided during application provisioning."/>
+        <property-ui description="This should be the application platform id provided during application provisioning." label="Platform ID" type="textBox"/>
       </property>
       <property name="app_id" required="true">
-        <property-ui type="textBox"
-                     label="Application ID"
-                     description="Provided during application provisioning."/>
+        <property-ui description="Provided during application provisioning." label="Application ID" type="textBox"/>
       </property>
       <property name="app_version" required="true">
-        <property-ui type="textBox"
-                     label="Application Version"
-                     description="Provided during application provisioning."/>
+        <property-ui description="Provided during application provisioning." label="Application Version" type="textBox"/>
       </property>
       <property name="app_access_key" required="true">
-        <property-ui type="textBox"
-                     label="Application Access Key"
-                     description="Generated after the application has been provisioned."/>
+        <property-ui description="Generated after the application has been provisioned." label="Application Access Key" type="textBox"/>
       </property>
       <property name="username" required="true">
-        <property-ui type="textBox"
-                     label="MAAS Admin Username"
-                     description="For use with basic authentication."/>
+        <property-ui description="For use with basic authentication." label="MAAS Admin Username" type="textBox"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox"
-                     label="MAAS Admin Password"
-                     description="For use with basic authentication."/>
+        <property-ui description="For use with basic authentication." label="MAAS Admin Password" type="secureBox"/>
       </property>
       <property name="outFile">
-        <property-ui type="textBox"
-                     label="Output File"
-                     description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory."/>
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -93,66 +75,40 @@
     </command>
   </step-type>
   <step-type name="Upgrade APP">
-    <description>Sends an WS call to upgrade app</description>
+    <description>Sends a WebService call to Upgrade App</description>
     <properties>
       <property name="url" required="true">
-        <property-ui type="textBox"
-                     label="URL"
-                     description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink"/>
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
       </property>
       <property name="billing_id" required="true">
-        <property-ui type="textBox"
-                     label="Billing ID"
-                     description="Billing Identifier - Available after customer enrolls with MaaS360."/>
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
       </property>
       <property name="account_name" required="true">
-        <property-ui type="textBox"
-                     label="Account Name"
-                     description=""/>
+        <property-ui description="" label="Account Name" type="textBox"/>
       </property>
       <property name="username" required="true">
-        <property-ui type="textBox"
-                     label="MAAS Admin Username"
-                     description="For use with basic authentication."/>
+        <property-ui description="For use with basic authentication." label="MAAS Admin Username" type="textBox"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox"
-                     label="MAAS Admin Password"
-                     description="For use with basic authentication."/>
+        <property-ui description="For use with basic authentication." label="MAAS Admin Password" type="secureBox"/>
       </property>
       <property name="auth_token" required="true">
-        <property-ui type="textBox"
-                     label="Auth Token"
-                     description="Token provided by the authentication web service called"
-                     default-value="${p?:environment/auth_token}"/>
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
       </property>
       <property name="maas360hosted" required="true">
-        <property-ui type="textBox"
-                     label="MaaS360 Hosted"
-                     description="Provided during application provisioning."
-                     default-value="Yes"/>
+        <property-ui default-value="Yes" description="Provided during application provisioning." label="MaaS360 Hosted" type="textBox"/>
       </property>
       <property name="app_type" required="true">
-        <property-ui type="textBox"
-                     label="Application Type"
-                     description="Possible values:
-1: iOS Enterprise Application
-3: Android Enterprise Application"/>
+        <property-ui description="Possible values: 1: iOS Enterprise Application 3: Android Enterprise Application" label="Application Type" type="textBox"/>
       </property>
       <property name="app_source" required="true">
-        <property-ui type="textBox"
-                     label="Application Source"
-                     description="The ipa/apk file to be uploaded."/>
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Source" type="textBox"/>
       </property>
       <property name="app_bundle_id" required="true">
-        <property-ui type="textBox"
-                     label="Application Bundle ID"
-                     description="The ipa's Bundle ID."/>
+        <property-ui description="The ipa's Bundle ID." label="Application Bundle ID" type="textBox"/>
       </property>
       <property name="outFile">
-        <property-ui type="textBox"
-                     label="Output File"
-                     description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory."/>
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -171,73 +127,94 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+    <step-type name="Add iOS Mobile App">
+    <description>Sends a WebService call to Add Enterprise iOS App. Required to be MaaS360 Hosted for this Integration to work.</description>
+    <properties>
+      <property name="url" required="true">
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      </property>
+      <property name="billing_id" required="true">
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
+      </property>
+      <property name="account_name" required="true">
+        <property-ui description="" label="Account Name" type="textBox"/>
+      </property>
+      <property name="username" required="true">
+        <property-ui description="For use with basic authentication." label="MAAS Admin Username" type="textBox"/>
+      </property>
+      <property name="password" required="true">
+        <property-ui description="For use with basic authentication." label="MAAS Admin Password" type="secureBox"/>
+      </property>
+      <property name="auth_token" required="true">
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
+      </property>
+      <property name="app_source" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Source" type="textBox"/>
+      </property>
+      <property name="app_bundle_id" required="true">
+        <property-ui description="The ipa's Bundle ID." label="Application Bundle ID" type="textBox"/>
+      </property>
+      <property name="app_description" required="false">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Description" type="textAreaBox"/>
+      </property>
+      <property name="app_category" required="false">
+        <property-ui description="Comma separated list of Categories" label="Application Categories" type="textBox"/>
+      </property>
+      <property name="outFile">
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/fiberlink-integration.jar"/>
+      <arg file="addiOSAPP.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
   <step-type name="Distribute APP">
     <description>Send WS call to distribute app</description>
     <properties>
       <property name="url" required="true">
-        <property-ui type="textBox"
-                     label="URL"
-                     description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink"/>
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
       </property>
       <property name="billing_id" required="true">
-        <property-ui type="textBox"
-                     label="Billing ID"
-                     description="Billing Identifier - Available after customer enrolls with MaaS360."/>
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
       </property>
       <property name="auth_token" required="true">
-        <property-ui type="textBox"
-                     label="Auth Token"
-                     description="Token provided by the authentication web service called"
-                     default-value="${p?:environment/auth_token}"/>
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
       </property>
       <property name="app_type" required="true">
-        <property-ui type="textBox"
-                     label="Application Type"
-                     description="Possible values:
-1: iOS Enterprise Application
-2: iOS App Store Application
-3: Android Enterprise Application
-4: Android Market Application"/>
+        <property-ui description="Possible values: 1: iOS Enterprise Application 2: iOS App Store Application 3: Android Enterprise Application 4: Android Market Application" label="Application Type" type="textBox"/>
       </property>
       <property name="app_bundle_id" required="true">
-        <property-ui type="textBox"
-                     label="Application Bundle ID"
-                     description="The ipa's Bundle ID."/>
+        <property-ui description="The ipa's Bundle ID." label="Application Bundle ID" type="textBox"/>
       </property>
       <property name="target_devices" required="true">
-        <property-ui type="textBox"
-                     label="Target Devices"
-                     description="Possible values:
-0: All Devices
-1: Device Group
-2: Specific Device"/>
+        <property-ui description="Possible values: 0: All Devices 1: Device Group 2: Specific Device" label="Target Devices" type="textBox"/>
       </property>
       <property name="device_group_id" required="false">
-        <property-ui type="textBox"
-                     label="Device Group ID"
-                     description="Required if targetDevices = 1"/>
+        <property-ui description="Required if targetDevices = 1" label="Device Group ID" type="textBox"/>
       </property>
       <property name="device_id" required="false">
-        <property-ui type="textBox"
-                     label="Device ID"
-                     description="Required if targetDevices = 2"/>
+        <property-ui description="Required if targetDevices = 2" label="Device ID" type="textBox"/>
       </property>
       <property name="instant_install" required="true">
-        <property-ui type="textBox"
-                     label="Instant Install?"
-                     description="Possible values: Yes, No; Relevant only for appType = 1 or 2 (For others, this value is ignored)"
-                     default-value="No"/>
+        <property-ui default-value="No" description="Possible values: Yes, No; Relevant only for appType = 1 or 2 (For others, this value is ignored)" label="Instant Install?" type="textBox"/>
       </property>
       <property name="send_email" required="true">
-        <property-ui type="textBox"
-                     label="Send Email?"
-                     description="Possible values: Yes, No"
-                     default-value="No"/>
+        <property-ui default-value="No" description="Possible values: Yes, No" label="Send Email?" type="textBox"/>
       </property>
       <property name="outFile">
-        <property-ui type="textBox"
-                     label="Output File"
-                     description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory."/>
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -260,25 +237,16 @@
     <description>Get all Device Groups (Public, Private and MaaS360 defined) for the currently logged-in Administrator</description>
     <properties>
       <property name="url" required="true">
-        <property-ui type="textBox"
-                     label="URL"
-                     description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink"/>
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
       </property>
       <property name="billing_id" required="true">
-        <property-ui type="textBox"
-                     label="Billing ID"
-                     description="Billing ID of the account for which the web-service is being executed"/>
+        <property-ui description="Billing ID of the account for which the web-service is being executed" label="Billing ID" type="textBox"/>
       </property>
       <property name="auth_token" required="true">
-        <property-ui type="textBox"
-                     label="Auth Token"
-                     description="Token provided by the authentication web service"
-                     default-value="${p?:environment/auth_token}"/>
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service" label="Auth Token" type="textBox"/>
       </property>
       <property name="outFile">
-        <property-ui type="textBox"
-                     label="Output File"
-                     description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory."/>
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -293,6 +261,44 @@
       <arg value="-cp"/>
       <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/fiberlink-integration.jar"/>
       <arg file="getDeviceGroups.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  <step-type name="Get App Details">
+    <description>Return all details of the Applications (only supported for Active Apps)</description>
+    <properties>
+      <property name="url" required="true">
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      </property>
+      <property name="billing_id" required="true">
+        <property-ui description="Billing ID of the account for which the web-service is being executed" label="Billing ID" type="textBox"/>
+      </property>
+      <property name="auth_token" required="true">
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service" label="Auth Token" type="textBox"/>
+      </property>
+      <property name="app_type" required="true">
+        <property-ui description="Possible values: 1: iOS Enterprise Application 2: iOS App Store Application 3: Android Enterprise Application 4: Android Market Application" label="Application Type" type="textBox"/>
+      </property>
+      <property name="app_bundle_id" required="true">
+        <property-ui description="The ipa's Bundle ID." label="Application Bundle ID" type="textBox"/>
+      </property>
+      <property name="outFile">
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/fiberlink-integration.jar"/>
+      <arg file="getAppDetails.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

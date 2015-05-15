@@ -6,7 +6,7 @@
 *	
 *	U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 *	GSA ADP Schedule Contract with IBM Corp.
-*
+*	
 *	Author: Tyson Lawrie & Glen Hickman
 *	Plugin: MaaS360 Utilities
 *	Filename: upgradeApp.groovy
@@ -36,14 +36,20 @@ final def workDir = new File('.').canonicalFile
 
 def url = props['url']
 def billing_id = props['billing_id']
-def account_name = props['account_name'] //TestFLK_IBM_MobileCoC
+def account_name = props['account_name']
 def username = props['username']
 def password = props['password']
-def maas360hosted = props['maas360hosted']
-def app_type = props['app_type']
 def app_source = props['app_source']
 def app_bundle_id = props['app_bundle_id']
+def app_description = props['app_description']
+def app_category = props['app_category']
 def outFileName = props['outFile']
+
+//Default Values for our Program
+def maas360hosted = "Yes"
+def removeApp = "No"
+def restrictDataBackup = "No"
+
 def outFile
 if (outFileName) {
 	outFile = new File(outFileName)
@@ -58,10 +64,12 @@ WebServiceRequest request = new WebServiceRequest()
 
 // Build the XML using the parameters
 LinkedHashMap<String, String> p = new LinkedHashMap<String, String>()
-p.put("appType", app_type)
-p.put("appId", app_bundle_id)
 p.put("maas360hosted", maas360hosted)
 p.put("appSourceURL", "")
+p.put("description", app_description)
+p.put("category", app_category)
+p.put("removeApp", removeApp)
+p.put("restrictDataBackup", restrictDataBackup)
 
 String xml = request.createTemplateXML("appDetails",p)
 
@@ -93,4 +101,4 @@ request.accept =  "application/xml"
 //Create Request
 System.out.println(xml)
 System.out.println("Application Source: " + app_source)
-request.createRequest(WebServices.UpgradeAppURI.getURL(), 1, billing_id, parametersObjectList)
+request.createRequest(WebServices.iOSEnterpriseAppURI.getURL(), 1, billing_id, parametersObjectList)

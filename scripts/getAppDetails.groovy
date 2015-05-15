@@ -34,6 +34,8 @@ final def workDir = new File('.').canonicalFile
 def url = props['url']
 def billing_id = props['billing_id']
 def auth_token = props['auth_token']
+def app_bundle_id = props['app_bundle_id']
+def app_type = props['app_type']
 def outFileName = props['outFile']
 def outFile
 if (outFileName) {
@@ -52,5 +54,9 @@ request.url = url
 request.authToken = auth_token
 request.accept =  null
 
+//Generate HTTPParameters
+request.parameters.put("appType", app_type);
+request.parameters.put("appId", app_bundle_id);
+
 //Create Request
-request.createRequest(WebServices.GetDeviceGroupsURI.getURL(), 0, billing_id)
+request.createRequest(WebServices.GetAppDetailsURI.getURL(), 0, billing_id)

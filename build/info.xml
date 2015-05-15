@@ -11,7 +11,7 @@
   or share their use case to help grow your plugin's functionality. 
   -->
   
-  <author name="MobileFirst">
+  <author name="Tyson Lawrie and Glen Hickman">
     <organization>IBM</organization>
     <email/>
     <website/>
@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>12.0</release-version>  
+  <release-version>14.0</release-version>  
     
   <release-notes>
     <!--
@@ -161,6 +161,14 @@
 	  </release-note>
 	  <release-note plugin-version="12">
 		12.0 - Removed Upgrade IPA and Authenticate
+	  </release-note>
+	  <release-note plugin-version="13">
+		13.0 - Added Add iOS Enterprise App
+		13.1 - Fixed up webservice import
+		13.2 - Fixed default properties in addiOSApp
+	  </release-note>
+	  <release-note plugin-version="14">
+		14.0 - Fixed Add iOS Enterprise App
 	  </release-note>
   </release-notes>
 </pluginInfo>

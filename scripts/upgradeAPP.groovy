@@ -6,7 +6,8 @@
 *	
 *	U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 *	GSA ADP Schedule Contract with IBM Corp.
-*	
+*
+*	Author: Tyson Lawrie & Glen Hickman
 *	Plugin: MaaS360 Utilities
 *	Filename: upgradeApp.groovy
  */

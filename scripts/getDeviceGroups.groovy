@@ -6,7 +6,8 @@
 *	
 *	U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 *	GSA ADP Schedule Contract with IBM Corp.
-*	
+*
+*	Author: Tyson Lawrie & Glen Hickman	
 *	Plugin: MaaS360 Utilities
 *	Filename: getDeviceGroups.groovy
  */
@@ -23,6 +24,7 @@ import org.apache.commons.httpclient.methods.RequestEntity
 import org.apache.commons.httpclient.methods.StringRequestEntity
 
 import com.mobilefirst.fiberlink.WebServiceRequest
+import com.mobilefirst.fiberlink.WebServices
 
 //Pull in properties from Plugin UI
 def apTool = new AirPluginTool(this.args[0], this.args[1])
