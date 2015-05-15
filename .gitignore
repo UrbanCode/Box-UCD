@@ -1,0 +1,4 @@
+launchConfigurations/
+bin/**
+build/**
+project.json
