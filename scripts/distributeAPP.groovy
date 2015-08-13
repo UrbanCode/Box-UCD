@@ -56,19 +56,6 @@
  //Start code for creating a WS request
  WebServiceRequest request = new WebServiceRequest()
  
-/* // Set request parameters
- Hashtable<String, Object> parametersObjectList = new Hashtable<String, Object>()
- Hashtable<String, String> paramsList = new Hashtable<String, String>()
- paramsList.put("accountType", "Customer")
- paramsList.put("accountName", "TestFLK_IBM_MobileCoC")
- paramsList.put("adminEmailAddress", "mfiosdev@us.ibm.com")
- paramsList.put("billingID", billing_id)
- paramsList.put("appID", app_bundle_id)
- paramsList.put("userName", "mfiosdev@us.ibm.com")
- paramsList.put("password", "appleibm10\$")
- 
- parametersObjectList.put("parameters", paramsList)*/
- 
  request.billingId = billing_id
  request.url = url
  request.authToken = auth_token

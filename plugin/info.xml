@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>14.0</release-version>  
+  <release-version>17</release-version>  
     
   <release-notes>
     <!--
@@ -169,6 +169,13 @@
 	  </release-note>
 	  <release-note plugin-version="14">
 		14.0 - Fixed Add iOS Enterprise App
+	  </release-note>
+	  <release-note plugin-version="15">
+		15.0 - New API and Step to support creating a new sub version of an App on the Store
+		15.1 - Fixed the link to upgradeAppPlus in the plugin.xml
+	  </release-note>
+	  <release-note plugin-version="16">
+		16.0 - Added the support for creating a new sub version of the app to upgradeApp
 	  </release-note>
   </release-notes>
 </pluginInfo>
