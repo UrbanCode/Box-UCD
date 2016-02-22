@@ -9,7 +9,7 @@
 
 -->
 
-	<project name="plugin-mobilefirst-MaaS360" default="main" basedir=".">
+	<project name="plugin-mobilefirst-box" default="main" basedir=".">
 
 		<!--<dirname property="example" file="${ant.file.example}" />-->
 		<dirname property="workspace" file="${example}" />
@@ -20,7 +20,7 @@
 
 		<property name="project" value="" />
 
-		<property name="deployPluginArchiveName" value="releases/plugin-mobilefirst-MaaS360_v14.zip" />
+		<property name="deployPluginArchiveName" value="releases/plugin-mobilefirst-Box_v1.zip" />
 
 		<property name="src.dir" value="${basedir}/src" />
 		<property name="build.dir" value="${basedir}/build" />

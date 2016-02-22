@@ -40,4 +40,7 @@
 	<migrate to-version="14">
 		<migrate-command name="Upgrade APP"/>
 	</migrate>
+	<migrate to-version="16">
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
 </plugin-upgrade>

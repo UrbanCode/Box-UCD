@@ -71,7 +71,7 @@
   called to execute the targets in the build.xml.
   -->
   
-  <tool-description>MaaS360 Integration via Web Services.</tool-description>
+  <tool-description>Box Integration via Web Services.</tool-description>
   
   <!-- 
   **related-info is NOT required**
@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>17</release-version>  
+  <release-version>1</release-version>  
     
   <release-notes>
     <!--

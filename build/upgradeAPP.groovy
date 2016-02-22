@@ -43,6 +43,7 @@ def maas360hosted = props['maas360hosted']
 def app_type = props['app_type']
 def app_source = props['app_source']
 def app_bundle_id = props['app_bundle_id']
+def maintain_as_additional_version = props['maintain_as_additional_version']
 def outFileName = props['outFile']
 def outFile
 if (outFileName) {
@@ -62,6 +63,7 @@ p.put("appType", app_type)
 p.put("appId", app_bundle_id)
 p.put("maas360hosted", maas360hosted)
 p.put("appSourceURL", "")
+p.put("maintainAsAdditionalVersion", maintain_as_additional_version)
 
 String xml = request.createTemplateXML("appDetails",p)
 

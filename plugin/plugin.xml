@@ -2,38 +2,35 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.MAAS360Utilities" name="MaaS360 Utilities" version="16"/>
+    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="1"/>
     <description>
-      Utilities related to integrating with MaaS360 via Web Services, such as Authenticating.
+      Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
-    <tag>MobileFirst/MaaS360 Utilities</tag>
+    <tag>Utilities/Box Utilities</tag>
   </header>
   <step-type name="Request Authentication">
     <description>Sends an HTTP call to a URL for Authentication Token</description>
     <properties>
-      <property name="url" required="true">
-        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      <property name="auth_token" required="false">
+        <property-ui description="Developer token generated on your application settings webpage or from SSH. Bypasses all other needed authentication. Must be refreshed every hour." label="Auth Token" type="textBox"/>
       </property>
-      <property name="billing_id" required="true">
-        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
+      <property name="entity_id" required="true">
+        <property-ui description="Entity ID - Username. Available on your application settings webpage." label="Entity ID" type="textBox"/>
       </property>
-      <property name="platform_id" required="true">
-        <property-ui description="This should be the application platform id provided during application provisioning." label="Platform ID" type="textBox"/>
+      <property name="client_id" required="true">
+        <property-ui description="Client ID - Your application’s client_id. Available on your application settings webpage." label="Client ID" type="textBox"/>
       </property>
-      <property name="app_id" required="true">
-        <property-ui description="Provided during application provisioning." label="Application ID" type="textBox"/>
+      <property name="client_secret" required="true">
+        <property-ui description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
       </property>
-      <property name="app_version" required="true">
-        <property-ui description="Provided during application provisioning." label="Application Version" type="textBox"/>
+      <property name="public_key_id" required="true">
+        <property-ui description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
       </property>
-      <property name="app_access_key" required="true">
-        <property-ui description="Generated after the application has been provisioned." label="Application Access Key" type="textBox"/>
+      <property name="private_key" required="true">
+        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally." label="Private Key" type="textBox"/>
       </property>
-      <property name="username" required="true">
-        <property-ui description="For use with basic authentication." label="MAAS Admin Username" type="textBox"/>
-      </property>
-      <property name="password" required="true">
-        <property-ui description="For use with basic authentication." label="MAAS Admin Password" type="secureBox"/>
+      <property name="private_key_password" required="true">
+        <property-ui description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
       </property>
       <property name="outFile">
         <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
@@ -43,15 +40,10 @@
         commandOut.print("==== Starting post processing ====\n");
 		properties.put("Status", "Success");
 		
-		arrTestStatus = new java.util.ArrayList();
-		
-		commandOut.print("\nEstablishing Regular Expression\n")
-		
-		scanner.register("<authToken>", function(lineNumber, line){
-		    var temp = line.replace(/.*<authToken>/g,"");
-		    var auth_token = temp.replace(/<\/authToken><errorCode>[0-9]*<\/errorCode><\/authResponse>/g,"");
+		scanner.register("box.auth.token:", function(lineNumber, line){
+		    var auth_token = line.replace(box.auth.token:,"");
 		    commandOut.print(auth_token);
-		    properties.put("maas360.auth.token",auth_token)
+		    properties.put("box.auth.token",auth_token)
 		});
 		
 		scanner.scan();
@@ -69,7 +61,7 @@
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
       <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/fiberlink-integration.jar"/>
-      <arg file="sendAuthenticationCall.groovy"/>
+      <arg file="boxSendAuthenticationCall.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
