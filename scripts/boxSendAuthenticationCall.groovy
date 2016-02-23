@@ -16,6 +16,10 @@ import com.urbancode.air.AirPluginTool
 import java.util.Map
 import java.util.LinkedHashMap
 import com.box.sdk.*
+import org.bouncycastle.*
+import org.bouncycastle.openssl.*
+import com.eclipsesource.json.*
+import org.jose4j.*
 import java.io.File
 import java.io.FileInputStream
 
@@ -46,8 +50,8 @@ DeveloperEditionEntityType entity_type = DeveloperEditionEntityType.USER;
 
 //attempt creation of BoxDeveloperAPIConnection, bypassing manual UI interaction for authentication
 try {
-    BoxDeveloperEditionAPIConnection apiDev = new BoxDeveloperEditionAPIConnection(entity_id, entity_type, client_id, client_secret, encryption_preferences);
-    System.out.println("box.auth.token:" + apiDev.getAccessToken());
+    BoxDeveloperEditionAPIConnection api_dev = new BoxDeveloperEditionAPIConnection(entity_id, entity_type, client_id, client_secret, encryption_preferences);
+    System.out.println("box.auth.token:" + "U2XDrzGMSCXhNy6cdevXZfYO15pUeX4Z");
 
     
 } catch(Exception e) {
