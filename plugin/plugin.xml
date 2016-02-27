@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="1"/>
+    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="2"/>
     <description>
       Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
@@ -69,14 +69,14 @@
   <step-type name="Box Upload File">
     <description>Sends a WebService call to upload a file to Box</description>
     <properties>
-      <property name="dev_token" required="true">
-        <property-ui default-value="${p?:environment/auth_token}" description="dev token" label="Dev Token" type="textBox"/>
+      <property name="dev_token" required="false">
+        <property-ui default-value="${p:Box Request Authentication/box.auth.token}" description="dev token" label="Dev Token" type="textBox"/>
       </property>
-      <property name="file_source" required="true">
-        <property-ui description="Source for file you want to upload." label="File Source" type="textBox"/>
+      <property name="file_path" required="true">
+        <property-ui description="Path to file that you want to upload." label="File Path" type="textBox"/>
       </property>
-      <property name="file_name" required="true">
-        <property-ui description="" label="File Name" type="textBox"/>
+      <property name="file_name" required="false">
+        <property-ui description="Set the name of the uploaded file if you want it to be different" label="File Name" type="textBox"/>
       </property>
       <property name="outFile">
         <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>

@@ -9,7 +9,7 @@
 *
 *	Author: Tim Bula
 *	Plugin: Box Utilities
-*	Filename: boxUploadFile.groovy
+*	Filename: boxDeleteFile.groovy
  */
 
 import com.urbancode.air.AirPluginTool
@@ -22,52 +22,41 @@ import com.eclipsesource.json.*
 import org.jose4j.*
 import java.io.File
 import java.io.FileInputStream
-import com.mobilefirst.box.*
 
 def apTool = new AirPluginTool(this.args[0], this.args[1])
 props = apTool.getStepProperties()
 final def workDir = new File('.').canonicalFile
 
 def dev_token = props['dev_token']
-def file_path = props['file_path']
 def file_name = props['file_name']
+//def file_id = props['file_id'] for the future if we want to save the file id property somehow
+//how many levels down you want to search
+def MAX_DEPTH = props['max_depth']
 
 //new connection to box using the dev token. Need to use the set property from the auth call in the future
-System.out.println("auth_token: " + dev_token);//this is not working need help on where to place the property after getting it from the readout
+System.out.println(dev_token);//this is not working need help on where to place the property after getting it from the readout
 BoxAPIConnection api = new BoxAPIConnection(dev_token);
 
 //print out user information just to confirm that it works
 BoxUser.Info user_info = BoxUser.getCurrentUser(api).getInfo();
-System.out.format("Welcome, %s <%s>!\n", user_info.getName(), user_info.getLogin());
+System.out.format("Welcome, %s <%s>!\n", userInfo.getName(), userInfo.getLogin());
 
 //get root level folder to upload file. Should give user flexibility to define the folder in the future?
 BoxFolder root_folder = BoxFolder.getRootFolder(api);
 System.out.println(root_folder.getInfo());
 
-//file to upload
-File file = new File(file_path);
-file_name = (file_name == null || file_name == "") ? file.getName() : file_name; 
-System.out.println(file_name);
+listFolderContents(root_folder, 0, file_name)
 
-BoxAPIResponse response = root_folder.canUpload(file_name, file.length());
-	        
-if (response.getResponseCode() == 200) {
-	System.out.println("can upload");
-}
-
-if (response.getResponseCode() == 200) {
-	try {
-		FileInputStream stream = new FileInputStream(file);
-		BoxFile.Info uploaded_file_info = root_folder.uploadFile(stream, file_name); 
-		stream.close();
-		uploaded_file = uploaded_file_info.getResource();
-		//possibly return the id of the resource for easy deleting in the future. Either that or we can look at a specific folder,
-		//get a list of all files on it, and delete the matching name
-
-		System.out.println(uploaded_file.getInfo().getID());
-		System.out.println(uploaded_file.getInfo().getName());	
-
-	} catch(Exception e) {
-		System.err.println(e);
+private static void searchAndDeleteFile(BoxFolder root_folder, int depth, file) {
+	for (BoxItem.Info itemInfo : folder) {
+		if (itemInfo instanceof BoxFile.Info && itemInfo.getName() == file) {
+			itemInfo.getResource.delete();
+		} else if (itemInfo instanceof BoxFolder.Info) {
+	        BoxFolder childFolder = (BoxFolder) itemInfo.getResource();
+	        if (depth < MAX_DEPTH) {
+	            listFolder(childFolder, depth + 1);
+	        }
+	     }
 	}
 }
+
