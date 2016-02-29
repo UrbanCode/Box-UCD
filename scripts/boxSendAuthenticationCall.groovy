@@ -53,7 +53,7 @@ DeveloperEditionEntityType entity_type = DeveloperEditionEntityType.USER;
 try {
     BoxDeveloperEditionAPIConnection api_dev = new BoxDeveloperEditionAPIConnection(entity_id, entity_type, client_id, client_secret, encryption_preferences);
     //System.out.println("box.auth.token:" + api_dev.getAccessToken());
-    System.out.println("box.auth.token:" + "ZsWh6uYYHBCbAel6UgKYLbyjuPolku0g");
+    System.out.println("box.auth.token:" + "jyWvU1SKkpDeCrX7RxnM7DlwfHdGHbgN");
 
     
 } catch(Exception e) {

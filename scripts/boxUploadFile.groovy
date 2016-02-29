@@ -41,7 +41,7 @@ BoxUser.Info user_info = BoxUser.getCurrentUser(api).getInfo();
 System.out.format("Welcome, %s <%s>!\n", user_info.getName(), user_info.getLogin());
 
 //get root level folder to upload file. Should give user flexibility to define the folder in the future?
-BoxFolder root_folder = BoxFolder.getRootFolder(api);
+BoxFolderTim root_folder = BoxFolderTim.getRootFolderTim(api);
 System.out.println(root_folder.getInfo());
 
 //file to upload
@@ -49,10 +49,13 @@ File file = new File(file_path);
 file_name = (file_name == null || file_name == "") ? file.getName() : file_name; 
 System.out.println(file_name);
 
-BoxAPIResponse response = root_folder.canUpload(file_name, file.length());
-	        
-if (response.getResponseCode() == 200) {
-	System.out.println("can upload");
+BoxAPIResponse response = new BoxAPIResponse();
+//canUpload returns error if any of the preflight check fails
+try {
+	response = root_folder.canUploadTim(file_name, file.length());
+	root_folder.canUploadTim(file_name, file.length());
+} catch(Exception e) {
+	System.err.println("Can't upload. API Error: " + e);
 }
 
 if (response.getResponseCode() == 200) {
@@ -61,13 +64,12 @@ if (response.getResponseCode() == 200) {
 		BoxFile.Info uploaded_file_info = root_folder.uploadFile(stream, file_name); 
 		stream.close();
 		uploaded_file = uploaded_file_info.getResource();
-		//possibly return the id of the resource for easy deleting in the future. Either that or we can look at a specific folder,
-		//get a list of all files on it, and delete the matching name
-
-		System.out.println(uploaded_file.getInfo().getID());
-		System.out.println(uploaded_file.getInfo().getName());	
+		System.out.println("Uploaded file name: " + uploaded_file.getInfo().getName());
+		System.out.println("Uploaded file name: " + uploaded_file.getInfo().getID());	
 
 	} catch(Exception e) {
-		System.err.println(e);
+		System.err.println("Upload file unsuccessful: " + e);
 	}
+} else {
+	System.err.println("Pre flight check failed. Response code: " + response.getResponseCode());
 }
