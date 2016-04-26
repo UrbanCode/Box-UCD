@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="2"/>
+    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="10"/>
     <description>
       Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
@@ -26,10 +26,13 @@
       <property name="public_key_id" required="true">
         <property-ui description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
       </property>
-      <property name="private_key" required="true">
-        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally." label="Private Key" type="textBox"/>
+      <property name="private_key" required="false">
+        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally. Private key or private key path are required" label="Private Key" type="textBox"/>
       </property>
-      <property name="private_key_password" required="true">
+      <property name="private_key_path" required="false">
+        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally.Private key or private key path are required" label="Private Key Path" type="textBox"/>
+      </property>
+      <property name="private_key_password" required="false">
         <property-ui description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
       </property>
       <property name="outFile">
@@ -69,7 +72,7 @@
   <step-type name="Box Upload File">
     <description>Sends a WebService call to upload a file to Box</description>
     <properties>
-      <property name="dev_token" required="false">
+      <property name="dev_token" required="true">
         <property-ui default-value="${p:Box Request Authentication/box.auth.token}" description="dev token" label="Dev Token" type="textBox"/>
       </property>
       <property name="file_path" required="true">
@@ -78,8 +81,14 @@
       <property name="file_name" required="false">
         <property-ui description="Set the name of the uploaded file if you want it to be different" label="File Name" type="textBox"/>
       </property>
-      <property name="outFile">
-        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      <property name="folder" required="true">
+        <property-ui default-value="testing" description="Set the name folder that you want the file to be uploaded. Will create folder if it does not exist." label="version" type="textBox"/>
+      </property>
+      <property name="component" required="false">
+        <property-ui default-value="testing" description="version of IPA being uploaded" label="version" type="textBox"/>
+      </property>
+      <property name="version" required="false">
+        <property-ui default-value="testing" description="version of IPA being uploaded" label="version" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[

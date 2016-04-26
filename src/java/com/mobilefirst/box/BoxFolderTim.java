@@ -82,4 +82,56 @@ public class BoxFolderTim extends BoxFolder {
         response.disconnect();
         return response;
     }
+
+    public BoxFolderTim.Info createFolder(String name) {
+        JsonObject parent = new JsonObject();
+        parent.add("id", this.getID());
+
+        JsonObject newFolder = new JsonObject();
+        newFolder.add("name", name);
+        newFolder.add("parent", parent);
+
+        BoxJSONRequest request = new BoxJSONRequest(this.getAPI(), CREATE_FOLDER_URL.build(this.getAPI().getBaseURL()),
+            "POST");
+        request.setBody(newFolder.toString());
+        BoxJSONResponse response = (BoxJSONResponse) request.send();
+        JsonObject responseJSON = JsonObject.readFrom(response.getJSON());
+
+        BoxFolderTim createdFolder = new BoxFolderTim(this.getAPI(), responseJSON.get("id").asString());
+        return createdFolder.new Info(responseJSON);
+    }
+
+    public class Info extends BoxFolder.Info {
+
+                /**
+         * Constructs an empty Info object.
+         */
+        public Info() {
+            super();
+        }
+
+        /**
+         * Constructs an Info object by parsing information from a JSON string.
+         * @param  json the JSON string to parse.
+         */
+        public Info(String json) {
+            super(json);
+        }
+ 
+        /**
+         * Constructs an Info object using an already parsed JSON object.
+         * @param  jsonObject the parsed JSON object.
+         */
+        Info(JsonObject jsonObject) {
+            super(jsonObject);
+        }
+
+        @Override
+        public BoxFolderTim getResource() {
+            return BoxFolderTim.this;
+            
+        }
+
+    }
+
 }

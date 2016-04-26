@@ -11,7 +11,7 @@
   or share their use case to help grow your plugin's functionality. 
   -->
   
-  <author name="Tyson Lawrie and Glen Hickman">
+  <author name="Tim Bula">
     <organization>IBM</organization>
     <email/>
     <website/>
@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>7</release-version>  
+  <release-version>10</release-version>  
     
   <release-notes>
     <!--
