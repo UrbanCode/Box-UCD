@@ -57,13 +57,15 @@ encryptionPreferences.setEncryptionAlgorithm(encryptionAlgorithm);
 //how else should this be done? I had issues pasting it into the UCD config field. 
 if (privateKey == null || "".equals(privateKey)) {
 	try {
+        System.out.println("Reading in private key from path: [" + privateKeyPath + "]");
         privateKey = new String(Files.readAllBytes(Paths.get(privateKeyPath)));
         System.out.println("privateKey: " + privateKey);
         encryptionPreferences.setPrivateKey(privateKey);
     } 
     catch (Exception e) {
-        System.out.println("Reading private key error. Error message: " + e.getMessage());
+        System.err.println("Reading private key error. Error message: " + e.getMessage());
         e.printStackTrace();
+        System.exit(1);
     }
 } 
 else {
@@ -76,16 +78,16 @@ DeveloperEditionEntityType entityType = DeveloperEditionEntityType.USER;
 
 //attempt creation of BoxDeveloperAPIConnection, bypassing manual UI interaction for authentication
 //print out token for post processing capture and use in other scripts
+System.out.println("Sending App User authentication request with ID: [" + appUserId + "]");
+BoxDeveloperEditionAPIConnection apiDevConnection = new BoxDeveloperEditionAPIConnection(appUserId, entityType, clientId, clientSecret, encryptionPreferences);
 try {
-    BoxDeveloperEditionAPIConnection apiDevConnection = new BoxDeveloperEditionAPIConnection(appUserId, entityType, clientId, clientSecret, encryptionPreferences);
-    String jwtAssertion = apiDevConnection.constructJWTAssertion();
-	System.out.println(jwtAssertion);
     apiDevConnection.authenticate();
-    String appUserToken = apiDevConnection.getAccessToken();
-    System.out.println("app.user.auth.token:" + appUserToken);
-
 } 
 catch(Exception e) {
-	System.err.println("Exception with JWT assertion. Error message: " + e.getMessage());
-    e.printStackTrace();
+    System.err.println("Exception with JWT assertion. Error message: " + e.getMessage());
+    System.exit(1);
 }
+String appUserToken = apiDevConnection.getAccessToken();
+System.out.println("Successfully authenticated App User");
+System.out.println("app.user.auth.token:" + appUserToken);
+

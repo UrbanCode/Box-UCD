@@ -57,16 +57,16 @@ encryptionPreferences.setPublicKeyID(publicKeyId);
 encryptionPreferences.setPrivateKeyPassword(privateKeyPassword);
 EncryptionAlgorithm encryptionAlgorithm = EncryptionAlgorithm.RSA_SHA_256;
 encryptionPreferences.setEncryptionAlgorithm(encryptionAlgorithm);
-//if the user doesn't set the private key, need the path to the file to be read in and parsed
+
 if (privateKey == null || "".equals(privateKey)) {
 	try {
-        //String private_key_file = "/Users/bula/Documents/apple_devops/projects/box_plugin/private_key.pem";
         privateKey = new String(Files.readAllBytes(Paths.get(privateKeyPath)));
         encryptionPreferences.setPrivateKey(privateKey);
     } 
     catch (Exception e) {
         System.out.println("Reading private key error. Error message: " + e.getMessage());
         e.printStackTrace();
+        System.exit(1);
     }
 } 
 else {
@@ -78,56 +78,46 @@ DeveloperEditionEntityType entityType = DeveloperEditionEntityType.ENTERPRISE;
 
 //attempt creation of BoxDeveloperAPIConnection, bypassing manual UI interaction for authentication
 //print out token for post processing capture and use in other scripts
+
+BoxDeveloperEditionAPIConnection apiDevConnection = new BoxDeveloperEditionAPIConnection(entityId, entityType, clientId, clientSecret, encryptionPreferences);
 try {
-    BoxDeveloperEditionAPIConnection apiDevConnection = new BoxDeveloperEditionAPIConnection(entityId, entityType, clientId, clientSecret, encryptionPreferences);
-    String jwtAssertion = apiDevConnection.constructJWTAssertion();
     apiDevConnection.authenticate();
-    String enterpriseToken = apiDevConnection.getAccessToken();
-    String foundUserId = getAppUserId(enterpriseToken, appUserName); 
-    System.out.println("box.app.user.id:" + foundUserId);
-
-
 } 
 catch(Exception e) {
-	System.err.println("Exception with JWT assertion. Error message: " + e.getMessage());
-    e.printStackTrace();
-}
+    System.err.println("Exception authenticating enterprise with JWT assertion. Error message: " + e.getMessage());
+    System.exit(1);
+}   
+String enterpriseToken = apiDevConnection.getAccessToken();
+String foundUserId = getAppUserId(enterpriseToken, appUserName); 
+System.out.println("box.app.user.id:" + foundUserId);
 
-
-private String getAppUserId(String enterpriseToken, String appUserName) {   
+String getAppUserId(String enterpriseToken, String appUserName) {
+    System.out.println("Matching provided App User name to App User in Enterprise");
+    BoxAPIConnection apiConnection;    
     try {
-        BoxAPIConnection apiConnection = new BoxAPIConnection(enterpriseToken);
-
-        //this if block should be taken out if we make appUserNames a mandatory plugin field. 
-        if (appUserName == null || "".equals(appUserName)) {
-            CreateUserParams params = new CreateUserParams();
-            params = params.setSpaceAmount(-1);
-            BoxUser.Info appUserInfo = BoxUser.createAppUser(api, "default", params);
-            return newAppUser.getID();
-        }
-        else {
-            Iterable<BoxUser.Info> enterpriseUsersIterable = BoxUser.getAllEnterpriseUsers(apiConnection);
-            Iterator<BoxUser.Info> enterpriseUserIterator = enterpriseUsersIterable.iterator(); 
-            while (enterpriseUserIterator.hasNext()) {
-                BoxUser.Info boxUserInfo = enterpriseUserIterator.next();
-                if (appUserName.equals(boxUserInfo.getName())) {
-                        return boxUserInfo.getID(); 
-                }
-            }
-            
-            //do we want to give them the ability to create app users at will? This is necessary for the first time
-            //if they were to create an app user outside of the plugin we could remove this 
-            System.out.println("Did not find app user for enterprise that matched App User name: [" + appUserName + "]. Creating App User");
-            CreateUserParams params = new CreateUserParams();
-            params = params.setSpaceAmount(-1);
-            BoxUser.Info newAppUser = BoxUser.createAppUser(apiConnection, appUserName, params);
-            return newAppUser.getID();
-        }
+        apiConnection = new BoxAPIConnection(enterpriseToken);
     }
     catch (Exception e) {
-        System.err.println("Exception with getting App User ID. Error message: " + e.getMessage());
+        System.err.println("Exception establishing Box API connection with enterprise auth token . Error message: " + e.getMessage());
         e.printStackTrace();
+        System.exit(1);
     }
+
+    Iterable<BoxUser.Info> enterpriseUsersIterable = BoxUser.getAllEnterpriseUsers(apiConnection);
+    Iterator<BoxUser.Info> enterpriseUserIterator = enterpriseUsersIterable.iterator(); 
+    while (enterpriseUserIterator.hasNext()) {
+        BoxUser.Info boxUserInfo = enterpriseUserIterator.next();
+        if (appUserName.equals(boxUserInfo.getName())) {
+            System.out.println("Found matching App User");
+            return boxUserInfo.getID(); 
+        }
+    }
+    
+    System.out.println("Did not find app user in enterprise that matched App User name: [" + appUserName + "]. Creating App User");
+    CreateUserParams params = new CreateUserParams();
+    params = params.setSpaceAmount(-1);
+    BoxUser.Info newAppUser = BoxUser.createAppUser(apiConnection, appUserName, params);
+    return newAppUser.getID();
 
 }
 
