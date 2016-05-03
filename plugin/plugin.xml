@@ -15,7 +15,7 @@
         <property-ui default-value="${p:box.entity.id}" description="Entity ID. EnterpriseID on account info tab on Admin Console." label="Entity ID" type="textBox"/>
       </property>
       <property name="client_id" required="true">
-        <property-ui default-value="${p:box.client.id}" description="Client ID - Your application’s client_id. Available on your application settings webpage." label="Client ID" type="textBox"/>
+        <property-ui default-value="${p:box.client.id}" description="Application’s client_id. Available on application settings webpage." label="Client ID" type="textBox"/>
       </property>
       <property name="client_secret" required="true">
         <property-ui default-value="${p:box.client.secret}" description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
