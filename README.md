@@ -3,7 +3,7 @@
 
 ![Box](http://static.appvn.com/i/uploads/thumbnails/122014/751821432ff9dda060e758d352540a0b-5-icon.png)
 
-## About
+# About
 ***
 **Plugin:** Box Utilities  
 **Author:** Timothy Bula  
@@ -11,31 +11,31 @@
 <br/>
 <br/>
 
-## Purpose
+# Purpose
 ***
 The Box Utiliies plugin provides integration with Box via Web Services, utilizing the Box Java-SDK. Version 1 of the the plugin has support for multi-step user authentication and file upload operations.
 
 
-##Helpful Links
+# Helpful Links
 ***
-[Box Content API Documentation](https://box-content.readme.io/reference "General overview")   
-[Box Java SDK](https://github.com/box/box-java-sdk)
+[Box Java SDK](https://github.com/box/box-java-sdk) 
+[Box Content API Documentation](https://box-content.readme.io/reference "General overview")    
+[Box Developer Account FAQ](https://box-content.readme.io/docs/developer-account-faq)
 
 
 
-##  Box Account Requirements
+# Box Account Requirements
 ***
-***Guide: [Box Platform](https://box-content.readme.io/docs/box-platform "Start of the box platform information")***
   
-1. Box Developer Account. I requested mine directly through Box representatives.   
-2. Box Developer Application  
-3. App Auth and App Users enabled   
+1. Box Developer Account [Reqeust Form](https://app.box.com/signup/o/default_developer_offer) 
+2. Box Developer Application [Create Application](https://www.box.com/developers/services)
+3. App Auth and App Users enabled [Guide](https://box-content.readme.io/docs/box-platform "Start of the box platform information")   
 4. Box App configured
 
 
-## Scripts
+# Scripts
 ***
-###boxSendAuthenticationCallEnterprise.groovy
+##boxSendAuthenticationCallEnterprise.groovy
 ***Performs the first leg of authentication***
  
 1. Creates Enterprise JWT assertion with provided information from Box app settings  
@@ -44,14 +44,14 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 4. Prints matching App User Id to the log
 
 
-###boxSendAuthentcationCallAppUser.groovy
+##boxSendAuthentcationCallAppUser.groovy
 ***Peforms second leg of authentication and allows Content API to be used***
   
 1. Uses App User Id to create User JWT assertion  
 2. Requests authentication  
 3. Prints auth token to log 
 
-###boxUploadFile.groovy
+##boxUploadFile.groovy
 ***Uploads file to box account***
 
 1. Establishes connection to Box with auth token  
@@ -61,20 +61,18 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 5. Uploads file to Box
 6. Prints uploaded file id to console
 
-###boxGetFileDownloadUrl.groovy
+##boxGetFileDownloadUrl.groovy
 ***Uploads file to box account***
 
 1. Establishes connection to Box with auth token  
 2. Finds the file by id
 3. Creates sharedlink and gets direct download url
-5. prints direct download url to the logs
+5. Prints direct download url to the logs
  
-
- 
-## Plugin  
+# Plugin  
 ***
 
-###Enterprise Authentication Step
+##Enterprise Authentication Step
 ***
 ![Plugin](./documentation/enterpriseAuthentication.png)  
 
@@ -87,13 +85,13 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 * **Private Key Password** - set private key in settings if desired
 * **App User Name** - name of app user on the developer enterprise account. Will be created on the enterprise account if not found. Needed for Content API
 
-###App User Authentication Step
+##App User Authentication Step
 ***
 ![Plugin](./documentation/appUserAuthentication.png)
 
-* **App User ID** - unique ID associated with the App User. Output of Enterprise Authentication step and required to get auth token.   
+* **App User ID** - unique ID associated with the App User. Output of Enterprise Authentication step and required to get auth token.  
 
-###Upload File Step
+##Upload File Step
 ***
 ![Plugin](./documentation/uploadFile.png) 
 
@@ -104,7 +102,7 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 * **Parent Folder ID** - provides safe way to locate upload folder in case of duplicate folder names in the folder structure. Can be found in the url when on the folder on box webapp. 
 * **Parent Folder** - name of folder that the upload folder is in. Only guarenteed to be correct folder if it is unique
 
-###Get File Download URl Step
+##Get File Download Url Step
 ***
 
 
