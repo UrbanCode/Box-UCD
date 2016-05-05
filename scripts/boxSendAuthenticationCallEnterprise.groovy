@@ -64,7 +64,7 @@ if (privateKey == null || "".equals(privateKey)) {
         encryptionPreferences.setPrivateKey(privateKey);
     } 
     catch (Exception e) {
-        System.out.println("Reading private key error. Error message: " + e.getMessage());
+        System.out.println("Error reading private key. Error message: " + e.getMessage());
         e.printStackTrace();
         System.exit(1);
     }
@@ -98,7 +98,7 @@ String getAppUserId(String enterpriseToken, String appUserName) {
         apiConnection = new BoxAPIConnection(enterpriseToken);
     }
     catch (Exception e) {
-        System.err.println("Exception establishing Box API connection with enterprise auth token . Error message: " + e.getMessage());
+        System.err.println("Error establishing Box API connection with enterprise auth token . Error message: " + e.getMessage());
         e.printStackTrace();
         System.exit(1);
     }

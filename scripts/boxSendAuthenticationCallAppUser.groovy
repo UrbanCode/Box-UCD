@@ -84,7 +84,7 @@ try {
     apiDevConnection.authenticate();
 } 
 catch(Exception e) {
-    System.err.println("Exception with JWT assertion. Error message: " + e.getMessage());
+    System.err.println("Exception authenticating with JWT assertion. Error message: " + e.getMessage());
     System.exit(1);
 }
 String appUserToken = apiDevConnection.getAccessToken();

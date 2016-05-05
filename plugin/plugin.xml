@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="20"/>
+    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="24"/>
     <description>
       Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
@@ -144,17 +144,71 @@
       </property>
     </properties>
     <post-processing><![CDATA[
-        if (properties.get("exitCode") != 0) {
-            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
-        }
-        else {
-            properties.put("Status", "Success");
-        }
+        commandOut.print("==== Starting post processing ====\n");
+    properties.put("Status", "Success");
+    
+    scanner.register("box.uploaded.file.id:", function(lineNumber, line){
+        var file_id = line.replace("box.uploaded.file.id:","");
+        commandOut.print("box.uploaded.file.id: " + file_id);
+        properties.put("box.uploaded.file.id",file_id);
+    });
+    
+    scanner.scan();
+    
+    var exit = properties.get('exitCode');
+    
+    if (exit == 0) {
+        properties.put('Status', 'Success');
+    }
+    else {
+         properties.put('Status', 'Failure');
+    }
+    commandOut.print("\n==== End post processing ====\n");
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
       <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
       <arg file="boxUploadFile.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  <step-type name="Box Get File Download Url">
+    <description>Sends a WebService call to get the direct download link for a file on Box</description>
+    <properties>
+      <property name="app_user_token" required="true">
+        <property-ui default-value="${p:Box Request App User Authentication/app.user.auth.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
+      </property>
+      <property name="file_id" required="true">
+        <property-ui default-value="${p:Box Upload File/box.uploaded.file.id}" description="Id of file to request the direct download link for" label="File ID" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        commandOut.print("==== Starting post processing ====\n");
+    properties.put("Status", "Success");
+    
+    scanner.register("box.file.download.url:", function(lineNumber, line){
+        var download_url = line.replace("box.file.download.url:","");
+        commandOut.print("box.file.download.url: " + download_url);
+        properties.put("box.file.download.url",download_url);
+    });
+    
+    scanner.scan();
+    
+    var exit = properties.get('exitCode');
+    
+    if (exit == 0) {
+        properties.put('Status', 'Success');
+    }
+    else {
+         properties.put('Status', 'Failure');
+    }
+    commandOut.print("\n==== End post processing ====\n");
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg file="boxGetFileDownloadUrl.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

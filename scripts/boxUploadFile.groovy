@@ -41,7 +41,7 @@ String filePath = props['file_path']
 parentFolder = (parentFolder == null || "".equals(parentFolder)) ? "root" : parentFolder;
 
 //new connection to box using the dev token. Need to use the set property from the auth call in the future
-System.out.println("auth_token: " + appUserToken);
+System.out.println("Using App User auth_token: " + appUserToken);
 System.out.println("Establishing Box API Connection");
 BoxAPIConnection apiConnection = new BoxAPIConnection(appUserToken);
 
@@ -52,11 +52,11 @@ BoxFolder boxUploadFolder = null;
 if (parentFolderId != null && !("".equals(parentFolderId))) {
 	System.out.println("Finding parent folder by ID: [" + parentFolderId + "]");
 	BoxFolder boxParentFolder = new BoxFolder(apiConnection, parentFolderId);
-	Iterable<BoxItem.Info> searchResultsIterable = boxParentFolder.getChildren();
-	Iterator<BoxItem.Info> searchResultsIterator = searchResultsIterable.iterator();
+	Iterable<BoxItem.Info> getChildrenIterable = boxParentFolder.getChildren();
+	Iterator<BoxItem.Info> getChilrenIterator = getChildrenIterable.iterator();
 	BoxItem.Info boxItemInfo;
-	while (searchResultsIterator.hasNext()) {
-		boxItemInfo = searchResultsIterator.next();
+	while (getChilrenIterator.hasNext()) {
+		boxItemInfo = getChilrenIterator.next();
 		if (boxItemInfo.getName().equals(uploadFolder) && boxItemInfo instanceof BoxFolder.Info) {
 			System.out.println("Found matching upload folder: [" + boxItemInfo.getName() + "] in parent folder");
 			boxUploadFolder = boxItemInfo.getResource();
@@ -148,7 +148,8 @@ try {
 		System.exit(1);
 	} 
 	stream.close();
-	System.out.println("Uploaded file name: " + uploadedFileInfo.getName());	
+	System.out.println("Uploaded file name: " + uploadedFileInfo.getName());
+	System.out.println("box.uploaded.file.id:" + uploadedFileInfo.getID());	
 }
 catch (Exception e) {
 	System.err.println("Prelfight check failed. Exception: " + e.getMessage());

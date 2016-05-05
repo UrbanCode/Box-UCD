@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>20</release-version>  
+  <release-version>24.00</release-version>  
     
   <release-notes>
     <!--
@@ -126,56 +126,6 @@
       
 	  <release-note plugin-version="1">
 		1.0 - Initial release of the plugin with a step to make Authentication and HTTP calls.
-	  </release-note>
-	  <release-note plugin-version="2">
-		2.0 - Fixed the classes import
-	  </release-note>
-	  <release-note plugin-version="3">
-		3.0 - Added new step upgradeIPA
-	  </release-note>
-	  <release-note plugin-version="4">
-		4.0 - Added new step upgradeIPAandAuthenticate
-	  </release-note>
-	  <release-note plugin-version="5">
-		5.0 - Added Bundle ID to step upgradeIPAandAuthenticate
-		5.1 - Compiled java classes for com.mobilefirst.fiberlink
-		5.2 - Cleaned JAR references
-	  </release-note>
-	  <release-note plugin-version="6">
-		6.0 - Made auth_token hidden and if hidden, go get new token
-	  </release-note>
-	  <release-note plugin-version="7">
-		7.0 - Added new step distributeApp
-	  </release-note>
-	  <release-note plugin-version="8">
-		8.0 - Fixed up Distribute App UI
-	  </release-note>
-	  <release-note plugin-version="9">
-		9.0 - Fixed up Distribute App UI
-	  </release-note>
-	  <release-note plugin-version="10">
-		10.0 - Added new step getDeviceGroups
-	  </release-note>
-	  <release-note plugin-version="11">
-		11.0 - Added default post processing script 
-	  </release-note>
-	  <release-note plugin-version="12">
-		12.0 - Removed Upgrade IPA and Authenticate
-	  </release-note>
-	  <release-note plugin-version="13">
-		13.0 - Added Add iOS Enterprise App
-		13.1 - Fixed up webservice import
-		13.2 - Fixed default properties in addiOSApp
-	  </release-note>
-	  <release-note plugin-version="14">
-		14.0 - Fixed Add iOS Enterprise App
-	  </release-note>
-	  <release-note plugin-version="15">
-		15.0 - New API and Step to support creating a new sub version of an App on the Store
-		15.1 - Fixed the link to upgradeAppPlus in the plugin.xml
-	  </release-note>
-	  <release-note plugin-version="16">
-		16.0 - Added the support for creating a new sub version of the app to upgradeApp
 	  </release-note>
   </release-notes>
 </pluginInfo>

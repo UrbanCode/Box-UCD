@@ -59,7 +59,17 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 3. Searches for upload folder in parent folder. Creates upload folder if it doesn't exist
 4. Performs preflight check on file to be upload (file size, naming conflicts, etc.)
 5. Uploads file to Box
+6. Prints uploaded file id to console
+
+###boxGetFileDownloadUrl.groovy
+***Uploads file to box account***
+
+1. Establishes connection to Box with auth token  
+2. Finds the file by id
+3. Creates sharedlink and gets direct download url
+5. prints direct download url to the logs
  
+
  
 ## Plugin  
 ***
@@ -93,4 +103,8 @@ The Box Utiliies plugin provides integration with Box via Web Services, utilizin
 * **Upload Folder** - name of folder file to be upload to. Will be created if not found in the parent folder. 
 * **Parent Folder ID** - provides safe way to locate upload folder in case of duplicate folder names in the folder structure. Can be found in the url when on the folder on box webapp. 
 * **Parent Folder** - name of folder that the upload folder is in. Only guarenteed to be correct folder if it is unique
+
+###Get File Download URl Step
+***
+
 
