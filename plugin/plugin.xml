@@ -2,14 +2,14 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="24"/>
+    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="26"/>
     <description>
       Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
     <tag>Utilities/Box Utilities</tag>
   </header>
   <step-type name="Box Request Enterprise Authentication">
-    <description>Sends an HTTP call to a URL for Authentication Token</description>
+    <description>Sends an HTTP call to a URL to request Authentication Token for Enterprise</description>
     <properties>
       <property name="entity_id" required="true">
         <property-ui default-value="${p:box.entity.id}" description="Entity ID. EnterpriseID on account info tab on Admin Console." label="Entity ID" type="textBox"/>
@@ -32,18 +32,15 @@
       <property name="private_key_password" required="false">
         <property-ui default-value="${p:box.private.key.password}" description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
       </property>
-      <property name="app_user_name" required="true">
-        <property-ui description="Name of App User account to be used. App User will be created with name if it doesn't exist." label="App User Name" type="textBox"/>
-      </property>
     </properties>
     <post-processing><![CDATA[
         commandOut.print("==== Starting post processing ====\n");
 		properties.put("Status", "Success");
 		
-		scanner.register("box.app.user.id:", function(lineNumber, line){
-		    var app_user_id = line.replace("box.app.user.id:","");
-		    commandOut.print("box.app.user.id: " + app_user_id);
-		    properties.put("box.app.user.id",app_user_id);
+		scanner.register("box.enterprise.auth.token:", function(lineNumber, line){
+		    var auth_token = line.replace("box.enterprise.auth.token:","");
+		    commandOut.print("box.enterprise.auth.token: " + auth_token);
+		    properties.put("box.enterprise.auth.token",auth_token);
 		});
 		
 		scanner.scan();
@@ -66,8 +63,48 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+  <step-type name="Box Create App User">
+    <description>Sends an HTTP call to a URL to create an App User on Box</description>
+    <properties>
+      <property name="app_user_name" required="true">
+        <property-ui description="Name of app user to be created. Returns existing app user ID if match is found" label="App User Name" type="textBox"/>
+      </property>
+      <property name="enterprise_token" required="true">
+        <property-ui default-value="${p:Box Request Enterprise Authentication/box.enterprise.auth.token}" description="Box Enterprise token needed to establish API connection and create App User" label="Enterprise Token" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        commandOut.print("==== Starting post processing ====\n");
+    properties.put("Status", "Success");
+    
+    scanner.register("box.app.user.id:", function(lineNumber, line){
+        var app_user_id = line.replace("box.app.user.id:","");
+        commandOut.print("box.app.user.id:" + app_user_id);
+        properties.put("box.app.user.id",app_user_id);
+    });
+    
+    scanner.scan();
+    
+    var exit = properties.get('exitCode');
+    
+    if (exit == 0) {
+        properties.put('Status', 'Success');
+    }
+    else {
+         properties.put('Status', 'Failure');
+    }
+    commandOut.print("\n==== End post processing ====\n");
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg file="boxCreateAppUser.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
   <step-type name="Box Request App User Authentication">
-    <description>Sends an HTTP call to a URL for Authentication Token for App User</description>
+    <description>Sends an HTTP call to a URL to request Authentication Token for App User</description>
     <properties>
       <property name="app_user_id" required="true">
         <property-ui default-value="${p:box.app.user.id}" description="App User ID found on enterprise account. Used as a part of the App Auth request to bypass manual input of credentials for OAuth2 authentication." label="App User ID" type="textBox"/>
@@ -121,6 +158,52 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+  <step-type name="Box Create Folder">
+    <description>Sends a WebService call to create a folder on Box</description>
+    <properties>
+      <property name="app_user_token" required="true">
+        <property-ui default-value="${p:Box Request App User Authentication/app.user.auth.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
+      </property>
+      <property name="folder" required="true">
+        <property-ui description="Name of folder to be created" label="Folder" type="textBox"/>
+      </property>
+      <property name="parent_folder_id" required="false">
+        <property-ui description="ID of parent folder of folder to be created. Overrides Parent Folder field if used. If null, Parent Folder value is used. Can be found in the url when in the folder on the box web application." label="Parent Folder ID" type="textBox"/>
+      </property>
+      <property name="parent_folder" required="false">
+        <property-ui description="Parent folder of folder to be created. Folder name must be unique to App User account to guarentee correct upload location. If left blank, parent folder is set to root of Box account" label="Parent Folder" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        commandOut.print("==== Starting post processing ====\n");
+    properties.put("Status", "Success");
+    
+    scanner.register("box.folder.id:", function(lineNumber, line){
+        var folder_id = line.replace("box.folder.id:","");
+        commandOut.print("box.folder.id: " + folder_id);
+        properties.put("box.folder.id",folder_id);
+    });
+    
+    scanner.scan();
+    
+    var exit = properties.get('exitCode');
+    
+    if (exit == 0) {
+        properties.put('Status', 'Success');
+    }
+    else {
+         properties.put('Status', 'Failure');
+    }
+    commandOut.print("\n==== End post processing ====\n");
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg file="boxCreateFolder.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
   <step-type name="Box Upload File">
     <description>Sends a WebService call to upload a file to Box</description>
     <properties>
@@ -133,14 +216,8 @@
       <property name="file_name" required="false">
         <property-ui description="Set the name of the uploaded file if you want it to be different from the file name" label="File Name" type="textBox"/>
       </property>
-      <property name="upload_folder" required="true">
-        <property-ui default-value="${p:component.name}" description="Set the name folder that you want the file to be uploaded. Will create folder if it does not exist." label="Upload Folder" type="textBox"/>
-      </property>
       <property name="parent_folder_id" required="false">
-        <property-ui description="ID of parent folder of upload folder. Overrides Parent Folder field if used. If null, Parent Folder value is used. Can be found in the url when in the folder on the box web application." label="Parent Folder ID" type="textBox"/>
-      </property>
-      <property name="parent_folder" required="false">
-        <property-ui description="Parent folder of upload folder. Folder name must be unique to App User account to guarentee correct upload location. If left blank, parent folder is set to root of Box account" label="Parent Folder" type="textBox"/>
+        <property-ui default-value="${p:Box Create Folder/box.folder.id" description="ID of parent folder of upload folder. Can be found in the url when in the folder on the Box.com web application." label="Parent Folder ID" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[

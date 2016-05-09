@@ -47,6 +47,7 @@ System.out.println("publicKeyId: " + publicKeyId);
 System.out.println("privateKeyPath: " + privateKeyPath);
 System.out.println("privateKeyPassword: " + privateKeyPassword);
 
+//call java class
 
 //build up preferences for JWTAssertion
 JWTEncryptionPreferences encryptionPreferences = new JWTEncryptionPreferences();
@@ -62,8 +63,8 @@ if (privateKey == null || "".equals(privateKey)) {
         System.out.println("privateKey: " + privateKey);
         encryptionPreferences.setPrivateKey(privateKey);
     } 
-    catch (Exception e) {
-        System.err.println("Reading private key error. Error message: " + e.getMessage());
+    catch (BoxAPIException e) {
+        System.err.println("Reading private key error. Error message: " + e.getResponse());
         e.printStackTrace();
         System.exit(1);
     }
@@ -83,8 +84,8 @@ BoxDeveloperEditionAPIConnection apiDevConnection = new BoxDeveloperEditionAPICo
 try {
     apiDevConnection.authenticate();
 } 
-catch(Exception e) {
-    System.err.println("Exception authenticating with JWT assertion. Error message: " + e.getMessage());
+catch(BoxAPIException e) {
+    System.err.println("Exception authenticating with JWT assertion. Error message: " + e.getResponse());
     System.exit(1);
 }
 String appUserToken = apiDevConnection.getAccessToken();

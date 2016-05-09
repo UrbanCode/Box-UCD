@@ -32,6 +32,8 @@ final def workDir = new File('.').canonicalFile
 String appUserToken = props['app_user_token']
 String fileId = props['file_id']
 
+//call java class
+
 //new connection to box using the dev token. Need to use the set property from the auth call in the future
 System.out.println("Using App User auth_token: " + appUserToken);
 System.out.println("Establishing Box API Connection");

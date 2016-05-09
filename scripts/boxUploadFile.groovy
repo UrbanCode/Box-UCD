@@ -31,129 +31,71 @@ final def workDir = new File('.').canonicalFile
 
 String appUserToken = props['app_user_token']
 String parentFolderId = props['parent_folder_id']
-String parentFolder = props['parent_folder']
-String uploadFolder = props['upload_folder']
 String fileName = props['file_name']
 String filePath = props['file_path']
 
-
-//if parent folder is empty, we assume root of box
-parentFolder = (parentFolder == null || "".equals(parentFolder)) ? "root" : parentFolder;
+//call java class
 
 //new connection to box using the dev token. Need to use the set property from the auth call in the future
 System.out.println("Using App User auth_token: " + appUserToken);
 System.out.println("Establishing Box API Connection");
 BoxAPIConnection apiConnection = new BoxAPIConnection(appUserToken);
-
-//get root folder
-BoxFolder boxRootFolder = BoxFolder.getRootFolder(apiConnection);
-BoxFolder boxUploadFolder = null; 
-
-if (parentFolderId != null && !("".equals(parentFolderId))) {
-	System.out.println("Finding parent folder by ID: [" + parentFolderId + "]");
-	BoxFolder boxParentFolder = new BoxFolder(apiConnection, parentFolderId);
-	Iterable<BoxItem.Info> getChildrenIterable = boxParentFolder.getChildren();
-	Iterator<BoxItem.Info> getChilrenIterator = getChildrenIterable.iterator();
-	BoxItem.Info boxItemInfo;
-	while (getChilrenIterator.hasNext()) {
-		boxItemInfo = getChilrenIterator.next();
-		if (boxItemInfo.getName().equals(uploadFolder) && boxItemInfo instanceof BoxFolder.Info) {
-			System.out.println("Found matching upload folder: [" + boxItemInfo.getName() + "] in parent folder");
-			boxUploadFolder = boxItemInfo.getResource();
-		}
-	}
-
-	if (boxUploadFolder == null) {
-		System.out.println("Not able to find matching upload folder in parent folder. Creating upload folder: [" + uploadFolder + "]");
-		BoxFolder.Info uploadFolderInfo = boxParentFolder.createFolder(uploadFolder);
-		boxUploadFolder = uploadFolderInfo.getResource();
-		System.out.println("Created folder: " + uploadFolderInfo.getName());
-		if (boxUploadFolder == null) {
-			System.err.println("Unable to use upload folder: [" + parentFolder + "]. Exiting now");
-			System.exit(1);
-		}		
-	}
-}
-else if (!parentFolder.equals("root")) {
-	//parent folder id null search from root folder for upload folder that has matching parent folder name
-	System.out.println("Searching for upload folder: [" + uploadFolder + "]");
-	Iterable<BoxItem.Info> searchResultsIterable = boxRootFolder.search(uploadFolder);
-	Iterator<BoxItem.Info> searchResultsIterator = searchResultsIterable.iterator();
-	BoxItem.Info boxItemInfo;
-	while (searchResultsIterator.hasNext()) {
-		boxItemInfo = searchResultsIterator.next();
-		if ((boxItemInfo.getName().equals(uploadFolder)) && (boxItemInfo.getParent().getName().equals(parentFolder))) {
-			System.out.println("Found matching upload folder with parent folder: [" + parentFolder + "]");
-			boxUploadFolder = boxItemInfo.getResource();
-		}
-	}
-	if (boxUploadFolder == null) {
-		System.out.println("Not able to find matching upload folder with correct parent folder. Searching for parent folder: [" + parentFolder + "]");
-		searchResultsIterable = boxRootFolder.search(parentFolder);
-		searchResultsIterator = searchResultsIterable.iterator();
-		while (searchResultsIterator.hasNext()) {
-			boxItemInfo = searchResultsIterator.next();
-			if (boxItemInfo.getName().equals(parentFolder) && boxItemInfo instanceof BoxFolder.Info) {
-				System.out.println("Found parent folder");
-				BoxFolder boxParentFolder = boxItemInfo.getResource();
-				BoxFolder.Info uploadFolderInfo = boxParentFolder.createFolder(uploadFolder);
-				boxUploadFolder = uploadFolderInfo.getResource();		
-				System.out.println("Created folder: " + uploadFolderInfo.getName());
-			}
-		}
-		if (boxUploadFolder == null) {
-			System.err.println("Unable to find parent folder: [" + parentFolder + "]. Exiting now");
-			System.exit(1);
-		}
-	}
-}
-//if both parent folder id and parent folder are blank
-else {
-	System.out.println("Parent folder is root of Box account. Looking for matching upload folder: [" + uploadFolder + "]");
-	Iterable<BoxItem.Info> boxFolderItemsIterable = boxRootFolder.getChildren();
-	Iterator<BoxItem.Info> boxFolderItemsIterator = boxFolderItemsIterable.iterator();
-	
-	BoxItem.Info boxItemInfo;
-	while (boxFolderItemsIterator.hasNext()) {
-		boxItemInfo = boxFolderItemsIterator.next();
-		if (boxItemInfo.getName().equals(uploadFolder) && boxItemInfo instanceof BoxFolder.Info) {
-			System.out.println("Found matching upload folder");
-			boxUploadFolder = boxItemInfo.getResource();
-		}
-	}
-	if (boxUploadFolder == null) {
-		System.out.println("Not able to find matching folder. Creating folder on box");
-		BoxFolder.Info uploadFolderInfo = boxRootFolder.createFolder(uploadFolder);
-		boxUploadFolder = uploadFolderInfo.getResource();
-		System.out.println("Created folder: " + uploadFolderInfo.getName());
-	}
-}
+BoxFolder boxParentFolder = new BoxFolder(apiConnection, parentFolderId);
+System.out.println("boxParentFolder name: " + boxParentFolder.getInfo().getName());
 
 //file to upload
 File file = new File(filePath);
 fileName = (fileName == null || "".equals(fileName)) ? file.getName() : fileName; 
 long fileSize = file.length();
 
-System.out.println("Attempting to upload file: " + fileName);
+System.out.println("Attempting to upload file: " + fileName);	
+FileInputStream stream = new FileInputStream(file);
 try {
-	boxUploadFolder.canUpload(fileName, fileSize);
-	
-	FileInputStream stream = new FileInputStream(file);
-	BoxFile.Info uploadedFileInfo;
-	try {
-		uploadedFileInfo = boxUploadFolder.uploadFile(stream, fileName);
-	} 
-	catch (Exception e) {
-		System.err.println("Uploading file failed. Exception: " + e.getMessage());
-		System.exit(1);
-	} 
-	stream.close();
-	System.out.println("Uploaded file name: " + uploadedFileInfo.getName());
-	System.out.println("box.uploaded.file.id:" + uploadedFileInfo.getID());	
+	boxParentFolder.canUpload(fileName, fileSize);
 }
-catch (Exception e) {
-	System.err.println("Prelfight check failed. Exception: " + e.getMessage());
+catch (BoxAPIException e) {
+	if (e.getResponseCode() == 409) {
+		System.err.println("API Response 409. Likely name collision in folder");
+		uploadVersion(boxParentFolder, fileName, stream);
+	} else {
+		System.err.println("Prelfight check failed. Exception: " + e.getResponse())
+	}
+}
+
+BoxFile.Info uploadedFileInfo;
+try {
+	uploadedFileInfo = boxParentFolder.uploadFile(stream, fileName);
+} 
+catch (BoxAPIException e) {
+	System.err.println("Uploading file failed. Exception: " + e.getResponse());
 	System.exit(1);
+} 
+
+stream.close();
+System.out.println("Uploaded file name: " + uploadedFileInfo.getName());
+System.out.println("box.uploaded.file.id:" + uploadedFileInfo.getID());	
+
+public void uploadVersion(BoxFolder boxParentFolder, String fileName, FileInputStream stream) {
+	System.out.println("Searhcing for existing box file");
+	Iterable<BoxItem.Info> getChildrenIterable = boxParentFolder.getChildren();
+	Iterator<BoxItem.Info> getChilrenIterator = getChildrenIterable.iterator();
+	BoxItem.Info boxItemInfo;
+	while (getChilrenIterator.hasNext()) {
+		boxItemInfo = getChilrenIterator.next();
+		if (boxItemInfo.getName().equals(fileName) && boxItemInfo instanceof BoxFile.Info) {
+			System.out.println("Found matching file: [" + boxItemInfo.getName() + "] in parent folder");
+			System.out.println("Uploading new version");
+			BoxFile existingBoxFile = boxItemInfo.getResource();
+			existingBoxFile.uploadVersion(stream);
+			System.out.println("New version uploaded");
+			System.out.println("Uploaded file name: " + boxItemInfo.getName());
+			System.out.println("box.uploaded.file.id:" + boxItemInfo.getID());	
+			System.exit(0);
+		}
+	}
+	System.out.println("Not able to find matching file in parent folder to update. Exiting out");
+	System.exit(1);
+
 }
 
 

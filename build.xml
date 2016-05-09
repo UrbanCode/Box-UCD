@@ -20,7 +20,7 @@
 
 		<property name="project" value="" />
 
-		<property name="deployPluginArchiveName" value="releases/plugin-mobilefirst-Box_v24.00.zip"/>
+		<property name="deployPluginArchiveName" value="releases/plugin-mobilefirst-Box_v26.00.zip"/>
 
 		<property name="src.dir" value="${basedir}/src" />
 		<property name="build.dir" value="${basedir}/build" />
