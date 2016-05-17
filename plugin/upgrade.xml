@@ -20,4 +20,12 @@
 		<migrate-command name="Box Request Authentication"/>
 		<migrate-command name="Box Upload File"/>
 	</migrate>
+	<migrate to-version="26">
+		<migrate-command name="Box Request Enterprise Authentication"/>
+		<migrate-command name="Box Create App User"/>
+		<migrate-command name="Box Request App User Authentication"/>
+		<migrate-command name="Box Create Folder"/>
+		<migrate-command name="Box Upload File"/>
+		<migrate-command name="Box Get File Download Url"/>
+	</migrate>
 </plugin-upgrade>
