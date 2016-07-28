@@ -10,7 +10,7 @@
 *	Author: Tim Bula
 *	Plugin: Box Utilities
 *	Filename: boxCreateAppUser.groovy
- */
+*/
 
 import com.urbancode.air.AirPluginTool
 import java.util.Map
@@ -40,40 +40,39 @@ String appUserName = props['app_user_name']
 System.out.println("enterpriseToken: " + enterpriseToken)
 System.out.println("appUserName: " + appUserName);
 
-
-//call java class
-
 String appUserId = getAppUserId(enterpriseToken, appUserName); 
 System.out.println("box.app.user.id:" + appUserId);
 
+//find app user id using the provided name
+//create app user if name is unique to account
 String getAppUserId(String enterpriseToken, String appUserName) {
-    System.out.println("Matching provided App User name to App User in Enterprise");
-    BoxAPIConnection apiConnection;    
-    try {
-        apiConnection = new BoxAPIConnection(enterpriseToken);
-    }
-    catch (BoxAPIException e) {
-        System.err.println("Error establishing Box API connection with enterprise auth token . Error message: " + e.getResponse());
-        e.printStackTrace();
-        System.exit(1);
-    }
+System.out.println("Matching provided App User name to App User in Enterprise");
+BoxAPIConnection apiConnection;    
+try {
+apiConnection = new BoxAPIConnection(enterpriseToken);
+}
+catch (BoxAPIException e) {
+System.err.println("Error establishing Box API connection with enterprise auth token . Error message: " + e.getResponse());
+e.printStackTrace();
+System.exit(1);
+}
 
-    Iterable<BoxUser.Info> enterpriseUsersIterable = BoxUser.getAllEnterpriseUsers(apiConnection);
-    Iterator<BoxUser.Info> enterpriseUsersIterator = enterpriseUsersIterable.iterator();
-    BoxUser.Info boxUserInfo;
-    while (enterpriseUsersIterator.hasNext()) {
-        boxUserInfo = enterpriseUsersIterator.next();
-        if (appUserName.equals(boxUserInfo.getName())) {
-            System.out.println("Found matching App User on account with name: [" + appUserName + "]");
-            return boxUserInfo.getID(); 
-        }
-    }
-    
-    System.out.println("App User name: [" + appUserName + "] is unique for account. Creating App User");
-    CreateUserParams params = new CreateUserParams();
-    params = params.setSpaceAmount(-1);
-    BoxUser.Info newAppUser = BoxUser.createAppUser(apiConnection, appUserName, params);
-    return newAppUser.getID();
+Iterable<BoxUser.Info> enterpriseUsersIterable = BoxUser.getAllEnterpriseUsers(apiConnection);
+Iterator<BoxUser.Info> enterpriseUsersIterator = enterpriseUsersIterable.iterator();
+BoxUser.Info boxUserInfo;
+while (enterpriseUsersIterator.hasNext()) {
+boxUserInfo = enterpriseUsersIterator.next();
+if (appUserName.equals(boxUserInfo.getName())) {
+System.out.println("Found matching App User on account with name: [" + appUserName + "]");
+return boxUserInfo.getID(); 
+}
+}
+
+System.out.println("App User name: [" + appUserName + "] is unique for account. Creating App User");
+CreateUserParams params = new CreateUserParams();
+params = params.setSpaceAmount(-1);
+BoxUser.Info newAppUser = BoxUser.createAppUser(apiConnection, appUserName, params);
+return newAppUser.getID();
 
 }
 

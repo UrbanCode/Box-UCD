@@ -46,7 +46,7 @@ Performs the first leg of OAuth2 authentication
 * **Private Key Path** - private key must be added to the UCD step to create the file
 * **Private Key Password** - set private key in settings if desired.
 
-###Logic  
+###Script  
 
 1. Creates Enterprise JWT assertion with provided information from Box app setting  
 2. Requests  enterprise authentication  
@@ -62,7 +62,7 @@ Retrieves/creates the App User
 * **Enterprise Auth Token** - enterprise auth token from first leg of authentication
 * **App User Name** - name of app user on the developer enterprise account. Will be created on the enterprise account if not found. Needed for Content API
 
-###Logic 
+###Script 
  
 1. Establishes API connection to Box with enterprise auth token
 2. Seaches for provided App User name and finds match
@@ -84,7 +84,7 @@ Performs second leg of OAuth2 authentication and allows Content API to be used
 * **Private Key Path** - private key must be added to the UCD step to create the file
 * **Private Key Password** - set private key in settings if desired.
 
-###Logic 
+###Script 
   
 1. Uses App User Id to create User JWT assertion  
 2. Requests authentication  
@@ -102,7 +102,7 @@ Locates/creates folder under specified parent folder
 * **Parent Folder ID** - ID of parent folder. Can be found on the Box web app in the url when inside the folder
 * **Parent Folder** - name of parent folder for folder to be located/created within. Will not necessarily find the correct folder. ID is preferred method for specifying folder 
 
-###Logic 
+###Script 
 
 1. Establishes connection to Box with app user auth token  
 2. Uses one of three methods based on what information is passed to it: Parent Folder ID, Parent Folder Name, Nothing
@@ -122,7 +122,7 @@ Uploads file to box account
 * **File Name** - name of the file to be uploaded. Optional and defaults to file name from File Path
 * **Parent Folder ID** - ID of parent folder for file to be uploaded to. Can be found on the Box web app in the url when inside the folder 
 
-###Logic 
+###Script 
 
 1. Establishes connection to Box with auth token  
 2. Performs preflight check on file to be upload (file size, naming conflicts, etc.)
@@ -139,7 +139,7 @@ Gets the direct download url for a file on box
 * **App User Auth Token** - auth token necessary for Box API calls   
 * **File ID** - ID of file to get the file downloadurl of
 
-###Logic 
+###Script 
 
 1. Establishes connection to Box with auth token  
 2. Finds file by id

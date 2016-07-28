@@ -1,5 +1,4 @@
-#needs work
-
+//Todo
 /*
 *	Licensed Materials - Property of IBM Corp.
 *
@@ -11,8 +10,8 @@
 *
 *	Author: Tim Bula
 *	Plugin: Box Utilities
-*	Filename: boxDeleteFile.groovy
- */
+*	Filename: boxDeleteFolder.groovy
+*/
 
 import com.urbancode.air.AirPluginTool
 import java.util.Map

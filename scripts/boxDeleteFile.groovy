@@ -10,7 +10,7 @@
 *	Author: Tim Bula
 *	Plugin: Box Utilities
 *	Filename: boxDeleteFile.groovy
- */
+*/
 
 import com.urbancode.air.AirPluginTool
 import java.util.Map

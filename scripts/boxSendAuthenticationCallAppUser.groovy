@@ -10,7 +10,7 @@
 *	Author: Tim Bula
 *	Plugin: Box Utilities
 *	Filename: boxSendAuthenticationCallAppUser.groovy
- */
+*/
 
 import com.urbancode.air.AirPluginTool
 import java.util.Map
@@ -55,12 +55,10 @@ encryptionPreferences.setPublicKeyID(publicKeyId);
 EncryptionAlgorithm encryptionAlgorithm = EncryptionAlgorithm.RSA_SHA_256;
 encryptionPreferences.setEncryptionAlgorithm(encryptionAlgorithm);
 //if the user doesn't set the private key, need the path to the file to be read in and parsed
-//how else should this be done? I had issues pasting it into the UCD config field. 
 if (privateKey == null || "".equals(privateKey)) {
 	try {
         System.out.println("Reading in private key from path: [" + privateKeyPath + "]");
         privateKey = new String(Files.readAllBytes(Paths.get(privateKeyPath)));
-        System.out.println("privateKey: " + privateKey);
         encryptionPreferences.setPrivateKey(privateKey);
     } 
     catch (BoxAPIException e) {
@@ -74,7 +72,7 @@ else {
 }
 encryptionPreferences.setPrivateKeyPassword(privateKeyPassword);
 
-//User correct type for assertion for App User
+//USER correct type for assertion for App User
 DeveloperEditionEntityType entityType = DeveloperEditionEntityType.USER;
 
 //attempt creation of BoxDeveloperAPIConnection, bypassing manual UI interaction for authentication
@@ -86,6 +84,7 @@ try {
 } 
 catch(BoxAPIException e) {
     System.err.println("Exception authenticating with JWT assertion. Error message: " + e.getResponse());
+    e.printStackTrace();
     System.exit(1);
 }
 String appUserToken = apiDevConnection.getAccessToken();

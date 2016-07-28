@@ -10,7 +10,7 @@
 *	Author: Tim Bula
 *	Plugin: Box Utilities
 *	Filename: boxSendAuthenticationCall.groovy
- */
+*/
 
 import com.urbancode.air.AirPluginTool
 import java.util.Map
@@ -27,8 +27,6 @@ import java.nio.file.Paths;
 import org.slf4j.impl.*;
 import org.slf4j.*;
 import groovy.util.logging.Slf4j
-
-
 
 def apTool = new AirPluginTool(this.args[0], this.args[1])
 props = apTool.getStepProperties()
@@ -60,6 +58,7 @@ encryptionPreferences.setEncryptionAlgorithm(encryptionAlgorithm);
 
 if (privateKey == null || "".equals(privateKey)) {
 	try {
+        System.out.println("Reading in private key from path: [" + privateKeyPath + "]");
         privateKey = new String(Files.readAllBytes(Paths.get(privateKeyPath)));
         encryptionPreferences.setPrivateKey(privateKey);
     } 
@@ -84,6 +83,7 @@ try {
 } 
 catch(BoxAPIException e) {
     System.err.println("Exception authenticating enterprise with JWT assertion. Error message: " + e.getResponse());
+    e.printStackTrace();
     System.exit(1);
 }   
 String enterpriseToken = apiDevConnection.getAccessToken();
