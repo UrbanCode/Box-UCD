@@ -12,25 +12,25 @@
     <description>Sends an HTTP call to a URL to request Authentication Token for Enterprise</description>
     <properties>
       <property name="entity_id" required="true">
-        <property-ui default-value="${p:box.entity.id}" description="Entity ID. EnterpriseID on account info tab on Admin Console." label="Entity ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.entity_id}" description="Entity ID. EnterpriseID on account info tab on Admin Console." label="Entity ID" type="textBox"/>
       </property>
       <property name="client_id" required="true">
-        <property-ui default-value="${p:box.client.id}" description="Application’s client_id. Available on application settings webpage." label="Client ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.client_id}" description="Application’s client_id. Available on application settings webpage." label="Client ID" type="textBox"/>
       </property>
       <property name="client_secret" required="true">
-        <property-ui default-value="${p:box.client.secret}" description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
+        <property-ui default-value="${p:component/box.client_secret}" description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
       </property>
       <property name="public_key_id" required="true">
-        <property-ui default-value="${p:box.public.key.id}" description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.public_key_id}" description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
       </property>
       <property name="private_key" required="false">
-        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally. Private key or private key path are required" label="Private Key" type="textBox"/>
+        <property-ui default-value="${p?:resource/box.private_key}" description="Used to generate JWTAssertion for authentication. Generated locally. Private key or private key path are required" label="Private Key" type="textBox"/>
       </property>
       <property name="private_key_path" required="false">
-        <property-ui default-value="${p:box.private.key.path}" description="Used to generate JWTAssertion for authentication. Generated locally.Private key or private key path are required" label="Private Key Path" type="textBox"/>
+        <property-ui default-value="${p?:resource/box.private_key_path}" description="Used to generate JWTAssertion for authentication. Generated locally.Private key or private key path are required" label="Private Key Path" type="textBox"/>
       </property>
       <property name="private_key_password" required="false">
-        <property-ui default-value="${p:box.private.key.password}" description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
+        <property-ui default-value="${p?:resource/box.private_key_password}" description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -67,10 +67,10 @@
     <description>Sends an HTTP call to a URL to create an App User on Box</description>
     <properties>
       <property name="app_user_name" required="true">
-        <property-ui description="Name of app user to be created. Returns existing app user ID if match is found" label="App User Name" type="textBox"/>
+        <property-ui default-value="${p:component/box.user_name}" description="Name of app user to be created. Returns existing app user ID if match is found" label="App User Name" type="textBox"/>
       </property>
       <property name="enterprise_token" required="true">
-        <property-ui default-value="${p:Box Request Enterprise Authentication/box.enterprise.auth.token}" description="Box Enterprise token needed to establish API connection and create App User" label="Enterprise Token" type="textBox"/>
+        <property-ui default-value="${p:resource/box.token}" description="Box Enterprise token needed to establish API connection and create App User" label="Enterprise Token" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -107,25 +107,25 @@
     <description>Sends an HTTP call to a URL to request Authentication Token for App User</description>
     <properties>
       <property name="app_user_id" required="true">
-        <property-ui default-value="${p:box.app.user.id}" description="App User ID found on enterprise account. Used as a part of the App Auth request to bypass manual input of credentials for OAuth2 authentication." label="App User ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.user_id}" description="App User ID found on enterprise account. Used as a part of the App Auth request to bypass manual input of credentials for OAuth2 authentication." label="App User ID" type="textBox"/>
       </property>
       <property name="client_id" required="true">
-        <property-ui default-value="${p:box.client.id}" description="Client ID - Your application’s client_id. Available on your application settings webpage." label="Client ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.client_id}" description="Client ID - Your application’s client_id. Available on your application settings webpage." label="Client ID" type="textBox"/>
       </property>
       <property name="client_secret" required="true">
-        <property-ui default-value="${p:box.client.secret}" description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
+        <property-ui default-value="${p:component/box.client_secret}" description="Client Secret - Your application’s client_secret. Available on your application settings webpage." label="Client Secret" type="textBox"/>
       </property>
       <property name="public_key_id" required="true">
-        <property-ui default-value="${p:box.public.key.id}" description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
+        <property-ui default-value="${p:component/box.public_key_id}" description="Used to generate JWTAssertion for authentication. Must be created on your application settings webpage." label="Public Key ID" type="textBox"/>
       </property>
       <property name="private_key" required="false">
-        <property-ui description="Used to generate JWTAssertion for authentication. Generated locally. Private key or private key path are required" label="Private Key" type="textBox"/>
+        <property-ui default-value="${p?:resource/box.private_key}" description="Used to generate JWTAssertion for authentication. Generated locally. Private key or private key path are required" label="Private Key" type="textBox"/>
       </property>
       <property name="private_key_path" required="false">
-        <property-ui default-value="${p:box.private.key.path}" description="Used to generate JWTAssertion for authentication. Generated locally.Private key or private key path are required" label="Private Key Path" type="textBox"/>
+        <property-ui default-value="${p?:resource/box.private_key_path}" description="Used to generate JWTAssertion for authentication. Generated locally.Private key or private key path are required" label="Private Key Path" type="textBox"/>
       </property>
       <property name="private_key_password" required="false">
-        <property-ui default-value="${p:box.private.key.password}" description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
+        <property-ui default-value="${p?:resource/box.private_key_password}" description="Optional. Needed if Private Key utilizes password for extra layer of security." label="Private Key Password" type="secureBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -162,16 +162,16 @@
     <description>Sends a WebService call to create a folder on Box</description>
     <properties>
       <property name="app_user_token" required="true">
-        <property-ui default-value="${p:Box Request App User Authentication/app.user.auth.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
+        <property-ui default-value="${p:resource/box.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
       </property>
       <property name="folder" required="true">
-        <property-ui description="Name of folder to be created" label="Folder" type="textBox"/>
+        <property-ui default-value="${p:component/box.folder}" description="Name of folder to be created" label="Folder" type="textBox"/>
       </property>
       <property name="parent_folder_id" required="false">
-        <property-ui description="ID of parent folder of folder to be created. Overrides Parent Folder field if used. If null, Parent Folder value is used. Can be found in the url when in the folder on the box web application." label="Parent Folder ID" type="textBox"/>
+        <property-ui default-value="${p?:component/box.parent_folder_id}" description="ID of parent folder of folder to be created. Overrides Parent Folder field if used. If null, Parent Folder value is used. Can be found in the url when in the folder on the box web application." label="Parent Folder ID" type="textBox"/>
       </property>
       <property name="parent_folder" required="false">
-        <property-ui description="Parent folder of folder to be created. Folder name must be unique to App User account to guarentee correct upload location. If left blank, parent folder is set to root of Box account" label="Parent Folder" type="textBox"/>
+        <property-ui default-value="${p?:component/box.parent_folder}" description="Parent folder of folder to be created. Folder name must be unique to App User account to guarentee correct upload location. If left blank, parent folder is set to root of Box account" label="Parent Folder" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -208,16 +208,16 @@
     <description>Sends a WebService call to upload a file to Box</description>
     <properties>
       <property name="app_user_token" required="true">
-        <property-ui default-value="${p:Box Request App User Authentication/app.user.auth.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
+        <property-ui default-value="${p:resource/box.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
       </property>
       <property name="file_path" required="true">
-        <property-ui default-value="${p:app.source.path}/${p:app.source.name}/${p:app.scheme.name}_${p:environment.name}_${p:version.name}.ipa" description="Path to file that you want to upload." label="File Path" type="textBox"/>
+        <property-ui default-value="${p:component/box.file_path}" description="Path to file that you want to upload." label="File Path" type="textBox"/>
       </property>
       <property name="file_name" required="false">
-        <property-ui description="Set the name of the uploaded file if you want it to be different from the file name" label="File Name" type="textBox"/>
+        <property-ui default-value="${p?:component/box.file_name}" description="Set the name of the uploaded file if you want it to be different from the file name" label="File Name" type="textBox"/>
       </property>
       <property name="parent_folder_id" required="false">
-        <property-ui default-value="${p:Box Create Folder/box.folder.id" description="ID of parent folder of upload folder. Can be found in the url when in the folder on the Box.com web application." label="Parent Folder ID" type="textBox"/>
+        <property-ui default-value="${p?:component/box.parent_folder_id}" description="ID of parent folder of upload folder. Can be found in the url when in the folder on the Box.com web application." label="Parent Folder ID" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -254,10 +254,10 @@
     <description>Sends a WebService call to get the direct download link for a file on Box</description>
     <properties>
       <property name="app_user_token" required="true">
-        <property-ui default-value="${p:Box Request App User Authentication/app.user.auth.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
+        <property-ui  default-value="${p:resource/box.token}" description="App User token used for API requests" label="App User Token" type="textBox"/>
       </property>
       <property name="file_id" required="true">
-        <property-ui default-value="${p:Box Upload File/box.uploaded.file.id}" description="Id of file to request the direct download link for" label="File ID" type="textBox"/>
+        <property-ui  default-value="${p:component/box.file_id}" description="Id of file to request the direct download link for" label="File ID" type="textBox"/>
       </property>
     </properties>
     <post-processing><![CDATA[
