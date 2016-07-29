@@ -7,3 +7,4 @@
 # ignore compilation related directories in the root of the project
 build/**
 releases/**
+lib/**

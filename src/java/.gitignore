@@ -5,6 +5,6 @@
 !.travis.yml
 
 # ignore compilation related directories in the root of the project
-bin/**
 build/**
 releases/**
+lib/**
