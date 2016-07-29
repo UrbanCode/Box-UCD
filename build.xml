@@ -176,7 +176,7 @@
         <available classname="org.apache.ivy.Main" property="ivy.installed"/>
         <target name="install-ivy" description="Install ivy" unless="ivy.installed">
             <property name="antHome" value="${user.home}${file.separator}.ant"/>
-            <mkdir dir="${antHome}"/>
+            <mkdir dir="${antHome}${file.separator}/lib"/>
             <get dest="${antHome}${file.separator}lib${file.separator}ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
             <fail message="SUCCESS! Ivy has been installed in ${antHome}. Run the build again.${line.separator}Note: If you get this message more than once, trying specify your Ant's home directory with the flag: ant -DantHome='ant/home/directory/here'" />
         </target>
