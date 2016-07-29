@@ -2,7 +2,7 @@ language: groovy
 rvm:
 - 1.8.8
 install:
-- ant install-ivy -DskipFail=true
+- ant install-ivy -DfailIvy=false
 before_script:
 - ant run-tests
 script:

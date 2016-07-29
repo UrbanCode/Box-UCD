@@ -174,8 +174,8 @@
         <!-- INSTALL IVY TARGET                                  -->
         <!-- =================================================== -->
         <available classname="org.apache.ivy.Main" property="ivy.installed"/>
-        <target name="install-ivy" depends="-install, -fail, -continue"></target>
-        
+        <target name="install-ivy" depends="-install, -fail"></target>
+
         <target name="-install" description="Install ivy" unless="ivy.installed">
             <!-- Installation -->
             <property name="antHome" value="${user.home}${file.separator}.ant"/>
@@ -184,21 +184,17 @@
             <echo message="SUCCESS! Ivy has been installed in ${antHome}." />
 
             <!-- Determine whether to continue or fail -->
-            <property name="skipFail" value="false"/>
+            <property name="failIvy" value="true"/>
             <condition property="do.fail">
-                <equals arg1="${skipFail}" arg2="false" />
-            </condition>
-            <condition property="do.continue">
-                <equals arg1="${skipFail}" arg2="true" />
+                <equals arg1="${failIvy}" arg2="true" />
             </condition>
         </target>
 
+        <!-- Default to fail if Ivy installed, unless -DfailIvy=false : Used for .travis -->
         <target name="-fail" if="do.fail">
             <fail message="Please run the build again.${line.separator}Note: If you get this message more than once, trying specify your Ant's home directory with the flag: ant -DantHome='ant/home/directory/here'" />
         </target>
-        <target name="-continue" if="do.continue">
-            <echo message="The ant tasks will continue to run as specified." />
-        </target>
+
         <!-- =================================================== -->
         <!-- TEST TARGET                                         -->
         <!-- =================================================== -->
@@ -236,7 +232,7 @@
                 <javac debug="on" deprecation="true"/>
             </groovyc>
             <delete dir="${build.tmp.groovy.dir}" />
-     
+
             <!-- Java -->
             <mkdir dir="${lib.build.classes.dir}"/>
             <javac srcdir="${src.java.dir}" destdir="${lib.build.classes.dir}" includeantruntime="false">
