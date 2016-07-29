@@ -8,7 +8,7 @@
 	  </description>
     <tag>Utilities/Box</tag>
   </header>
-  <step-type name="Box Request Enterprise Authentication">
+  <step-type name="Request Enterprise Authentication">
     <description>Sends an HTTP call to a URL to request Authentication Token for Enterprise</description>
     <properties>
       <property name="entity_id" required="true">
@@ -63,7 +63,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
-  <step-type name="Box Create App User">
+  <step-type name="Create App User">
     <description>Sends an HTTP call to a URL to create an App User on Box</description>
     <properties>
       <property name="app_user_name" required="true">
@@ -103,7 +103,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
-  <step-type name="Box Request App User Authentication">
+  <step-type name="Request App User Authentication">
     <description>Sends an HTTP call to a URL to request Authentication Token for App User</description>
     <properties>
       <property name="app_user_id" required="true">
@@ -158,7 +158,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
-  <step-type name="Box Create Folder">
+  <step-type name="Create Folder">
     <description>Sends a WebService call to create a folder on Box</description>
     <properties>
       <property name="app_user_token" required="true">
@@ -204,7 +204,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
-  <step-type name="Box Upload File">
+  <step-type name="Upload File">
     <description>Sends a WebService call to upload a file to Box</description>
     <properties>
       <property name="app_user_token" required="true">
@@ -250,7 +250,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
-  <step-type name="Box Get File Download Url">
+  <step-type name="Get File Download Url">
     <description>Sends a WebService call to get the direct download link for a file on Box</description>
     <properties>
       <property name="app_user_token" required="true">
