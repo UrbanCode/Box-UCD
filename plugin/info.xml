@@ -105,7 +105,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>26.02</release-version>  
+  <release-version>27</release-version>  
     
   <release-notes>
     <!--
@@ -126,6 +126,9 @@
       
 	  <release-note plugin-version="1">
 		1.0 - Initial release of the plugin with a step to make Authentication and HTTP calls.
+	  </release-note>
+	  <release-note plugin-version="27">
+		Initial Community Release!
 	  </release-note>
   </release-notes>
 </pluginInfo>

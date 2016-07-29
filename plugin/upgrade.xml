@@ -28,4 +28,6 @@
 		<migrate-command name="Box Upload File"/>
 		<migrate-command name="Box Get File Download Url"/>
 	</migrate>
+	<migrate to-version="27">
+	</migrate>
 </plugin-upgrade>

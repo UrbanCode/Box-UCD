@@ -2,11 +2,11 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.BOXUtilities" name="Box Utilities" version="26"/>
+    <identifier id="com.ibm.plugins.box-utilities" name="Box Utilities" version="27"/>
     <description>
       Utilities related to integrating with Box via Web Services, such as Authenticating, Uploading and Deleting files.
 	  </description>
-    <tag>Utilities/Box Utilities</tag>
+    <tag>Utilities/Box</tag>
   </header>
   <step-type name="Box Request Enterprise Authentication">
     <description>Sends an HTTP call to a URL to request Authentication Token for Enterprise</description>
@@ -57,7 +57,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxSendAuthenticationCallEnterprise.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -97,7 +97,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxCreateAppUser.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -152,7 +152,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxSendAuthenticationCallAppUser.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -198,7 +198,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxCreateFolder.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -244,7 +244,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxUploadFile.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -284,7 +284,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52/.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar"/>
+      <arg path="classes:lib/box-java-sdk-2.0.0.jar:lib/minimal-json-0.9.1.jar:lib/jose4j-0.4.4.jar:lib/bcprov-jdk15on-1.52.jar:lib/bcpkix-jdk15on-1.52.jar:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/slf4j-api-1.7.7.jar:lib/slf4j-nop-1.7.7.jar:lib/java-jwt-2.1.0.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="boxGetFileDownloadUrl.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>

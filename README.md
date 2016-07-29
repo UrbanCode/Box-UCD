@@ -1,4 +1,4 @@
-# Box Utilities Plugin
+﻿# Box Utilities Plugin
 ***
 
 ![Box](http://static.appvn.com/i/uploads/thumbnails/122014/751821432ff9dda060e758d352540a0b-5-icon.png)
@@ -9,9 +9,12 @@
 **Author:** Timothy Bula  
 **Date:** 02/05/16
 
+# License
+This plugin is protected under the [Eclipse Public License - v 1.0 License](https://www.eclipse.org/legal/epl-v10.html)
+
 # Purpose
 ***
-The Box Utiliies plugin provides integration with Box via Web Services, utilizing the Box Java-SDK. Version 1 of the the plugin has support for multi-step user authentication and file upload operations.
+The Box Utilities plugin provides integration with Box via Web Services, utilizing the Box Java-SDK. Version 1 of the the plugin has support for multi-step user authentication and file upload operations.
 
 
 # Helpful Background Info

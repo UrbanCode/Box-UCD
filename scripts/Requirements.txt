@@ -1,8 +1,0 @@
-Box Plugin Requirements:
-1. Need an Enterprise account with App Users
-2. Create an Box application with that account (box.developers.com)
-3. Generate an RSA Keypair and add Public Key to Box application
-4. Provide necessary information from application in plugin fields in from Box App to generate JWT Assertion to authenticate user, bypassing first leg of OAuth2. 
-5. Box Content API is now available
-
-Needed to add http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html to JAVA_HOME/jre/lib/security for the private key to be read in.
