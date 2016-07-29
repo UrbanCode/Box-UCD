@@ -22,8 +22,6 @@ import com.eclipsesource.json.*
 import org.jose4j.*
 import java.io.File
 import java.io.FileInputStream
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import org.slf4j.impl.*;
 import org.slf4j.*;
 import groovy.util.logging.Slf4j

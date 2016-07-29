@@ -38,7 +38,7 @@ The Box Utilities plugin provides integration with Box via Web Services, utilizi
 ***
 ##boxSendAuthenticationCallEnterprise.groovy
 ***
-Performs the first leg of OAuth2 authentication
+Performs the first leg of OAuth2 authentication. Note: Not compatiable with Java v6
 
 ###Parameters  
 
@@ -76,7 +76,7 @@ Retrieves/creates the App User
 
 ##boxSendAuthentcationCallAppUser.groovy
 ***
-Performs second leg of OAuth2 authentication and allows Content API to be used
+Performs second leg of OAuth2 authentication and allows Content API to be used. Note: Not compatiable with Java v6
 
 ###Parameters###
 
