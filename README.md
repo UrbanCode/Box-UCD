@@ -1,5 +1,6 @@
 ﻿# Box Utilities Plugin
 ***
+Note: This is not the plugin distributable! This is the source code. To find the installable plugin, go into the 'Releases' tab, and download a stable version.
 
 ![Box](http://static.appvn.com/i/uploads/thumbnails/122014/751821432ff9dda060e758d352540a0b-5-icon.png)
 
