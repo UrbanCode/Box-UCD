@@ -1,8 +1,13 @@
-Box Plugin Requirements:
+
+A JSON Web Token (JWT) is required to access Box's REST api. Follow these directions to acquire one: https://docs.box.com/v2.0/docs/app-auth
+
+Simplified JWT Directions:
 1. Need an Enterprise account with App Users
 2. Create an Box application with that account (box.developers.com)
 3. Generate an RSA Keypair and add Public Key to Box application
-4. Provide necessary information from application in plugin fields in from Box App to generate JWT Assertion to authenticate user, bypassing first leg of OAuth2. 
+4. Provide necessary information from application in plugin fields in from Box App to generate JWT Assertion to authenticate user, bypassing first leg of OAuth2.
 5. Box Content API is now available
 
 Needed to add http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html to JAVA_HOME/jre/lib/security for the private key to be read in.
+
+Note: Typical enterprise Box users will be unable to create an App due to insufficient permissions. You will need to contact your support team to help acquire a token.
